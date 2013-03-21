@@ -1,8 +1,9 @@
-all: nivel.o
-	gcc main.c nivel.o -o nivel -lncurses -ggdb
-
-nivel:
-	gcc nivel.c -c -o nivel.o -lncurses
+all:
+	cd libnivel; make
+	cd testnivel; make
 
 clean:
-	rm nivel.o nivel
+	cd libnivel; make clean
+	cd testnivel; make clean
+
+
