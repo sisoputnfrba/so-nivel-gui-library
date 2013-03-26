@@ -57,6 +57,7 @@ void Dibujar(Items* items) {
 
 	}
 	wrefresh(secwin);
+	wrefresh(mainwin);
 
 }
 
