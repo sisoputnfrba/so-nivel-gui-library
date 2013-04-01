@@ -1,9 +1,9 @@
 all:
-	cd libnivel; make
-	cd testnivel; make
+	cd nivel-gui; make
+	cd nivel-gui-test; make
 
 clean:
-	cd libnivel; make clean
-	cd testnivel; make clean
+	cd nivel-gui; make clean
+	cd nivel-gui-test; make clean
 
 
