@@ -9,7 +9,7 @@ WINDOW * mainwin;
 
 int rows, cols;
 
-void Inicializar(void) {
+void nivel_gui_inicializar(void) {
 
 	mainwin = initscr();
 	keypad(stdscr, TRUE);
@@ -21,7 +21,7 @@ void Inicializar(void) {
 	box(stdscr, 0, 0);
 	refresh();
 
-	GetTermSize(&rows, &cols);
+	nivel_gui_get_term_size(&rows, &cols);
 	secwin = newwin(rows - 2, cols, 0, 0);
 	box(secwin, 0, 0);
 	wrefresh(secwin);
@@ -29,7 +29,7 @@ void Inicializar(void) {
 }
 
 
-void Dibujar(Items* items) {
+void nivel_gui_dibujar(Items* items) {
 
 	Items *temp = items;
 	int i = 0;
@@ -62,7 +62,7 @@ void Dibujar(Items* items) {
 }
 
 
-void Terminar(void) {
+void nivel_gui_terminar(void) {
 
         delwin(mainwin);
         delwin(secwin);
@@ -71,7 +71,7 @@ void Terminar(void) {
 
 }
 
-void GetTermSize(int * rows, int * cols) {
+void nivel_gui_get_term_size(int * rows, int * cols) {
 
     struct winsize ws;
 
@@ -83,8 +83,8 @@ void GetTermSize(int * rows, int * cols) {
     *cols = ws.ws_col;
 }
 
-void getAreaNivel(int * rows, int * cols) {
-	GetTermSize(rows, cols);
+void nivel_gui_get_area_nivel(int * rows, int * cols) {
+	nivel_gui_get_term_size(rows, cols);
 	*rows = *rows - 4;
 	*cols = *cols - 2;
 }

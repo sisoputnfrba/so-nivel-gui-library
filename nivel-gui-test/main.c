@@ -15,9 +15,9 @@ int main(void) {
 	int x = 1;
 	int y = 1;
 
-	Inicializar();
+	nivel_gui_inicializar();
 
-        getAreaNivel(&rows, &cols);
+    nivel_gui_get_area_nivel(&rows, &cols);
 
 	q = rows;
 	p = cols;
@@ -29,7 +29,7 @@ int main(void) {
 	CrearCaja(&ListaItems, 'M', 15, 8, 3);
 	CrearCaja(&ListaItems, 'F', 9, 19, 2);
 
-	Dibujar(ListaItems);
+	nivel_gui_dibujar(ListaItems);
 
 	while ( 1 ) {
 		int key = getch();
@@ -86,7 +86,7 @@ int main(void) {
 			break;
 			case 'Q':
 			case 'q':
-				Terminar();
+				nivel_gui_terminar();
 				exit(0);
 			break;
 		}
@@ -110,7 +110,7 @@ int main(void) {
 			BorrarItem(&ListaItems, '#'); //si chocan, borramos uno (!)
 		}
 
-		Dibujar(ListaItems);
+		nivel_gui_dibujar(ListaItems);
 	}
 
 	BorrarItem(&ListaItems, '#');
@@ -119,5 +119,5 @@ int main(void) {
 	BorrarItem(&ListaItems, 'M');
 	BorrarItem(&ListaItems, 'F');
 
-	Terminar();
+	nivel_gui_terminar();
 }

@@ -1,20 +1,20 @@
 #define PERSONAJE 0
 #define CAJA_DE_RECURSOS 1
 
-struct s_items {
+struct item {
 	char id;
 	int posx;
 	int posy;
 	char is_rec; // PERSONAJE o CAJA_DE_RECURSOS
 	int cant_rec;
-	struct s_items *next;
+	struct item *next;
 };
 
-typedef struct s_items Items;
+typedef struct item Items;
 
-void Dibujar(Items* items);
-void Terminar(void);
-void Inicializar(void);
+void nivel_gui_dibujar(Items* items);
+void nivel_gui_terminar(void);
+void nivel_gui_inicializar(void);
 
-void GetTermSize(int * rows, int * cols) ;
-void getAreaNivel(int * rows, int * cols);
+void nivel_gui_get_term_size(int * rows, int * cols) ;
+void nivel_gui_get_area_nivel(int * rows, int * cols);
