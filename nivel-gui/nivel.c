@@ -4,12 +4,11 @@
 #include <sys/ioctl.h>
 #include <curses.h>
 
-WINDOW * secwin;
-WINDOW * mainwin;
 
-int rows, cols;
-
-int inicializado = 0;
+static WINDOW * secwin;
+static WINDOW * mainwin;
+static int rows, cols;
+static int inicializado = 0;
 
 
 // ------ Prototipos de Funciones utilitarias ------------
