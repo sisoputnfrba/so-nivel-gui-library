@@ -1,18 +1,18 @@
-#define PERSONAJE 0
-#define CAJA_DE_RECURSOS 1
+#define PERSONAJE_ITEM_TYPE 0
+#define RECURSO_ITEM_TYPE 1
 
 struct item {
 	char id;
 	int posx;
 	int posy;
-	char is_rec; // PERSONAJE o CAJA_DE_RECURSOS
-	int cant_rec;
+	char item_type; // PERSONAJE o CAJA_DE_RECURSOS
+	int quantity;
 	struct item *next;
 };
 
-typedef struct item Items;
+typedef struct item ITEM_NIVEL;
 
-void nivel_gui_dibujar(Items* items);
+void nivel_gui_dibujar(ITEM_NIVEL* items);
 void nivel_gui_terminar(void);
 void nivel_gui_inicializar(void);
 

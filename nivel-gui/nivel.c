@@ -29,9 +29,9 @@ void nivel_gui_inicializar(void) {
 }
 
 
-void nivel_gui_dibujar(Items* items) {
+void nivel_gui_dibujar(ITEM_NIVEL* items) {
 
-	Items *temp = items;
+	ITEM_NIVEL *temp = items;
 	int i = 0;
 
 	werase(secwin);
@@ -43,14 +43,14 @@ void nivel_gui_dibujar(Items* items) {
 
 	while (temp != NULL) {
 		wmove (secwin, temp->posx, temp->posy);
-		if (temp->is_rec) {
+		if (temp->item_type) {
 			waddch(secwin, temp->id | COLOR_PAIR(3));
 		} else {
 			waddch(secwin, temp->id | COLOR_PAIR(2));
 		}
-		if (temp->is_rec) {
+		if (temp->item_type) {
 			move(rows - 2, 7 * i + 3 + 9);
-			printw("%c: %d - ", temp->id, temp->cant_rec);
+			printw("%c: %d - ", temp->id, temp->quantity);
 			i++;
 		}
 		temp = temp->next;

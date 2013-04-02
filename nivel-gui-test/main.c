@@ -1,4 +1,3 @@
-#include "nivel.h"
 #include "tad_items.h"
 
 #include <stdlib.h>
@@ -7,7 +6,7 @@
 
 int main(void) {
 
-	Items* ListaItems = NULL;
+	ITEM_NIVEL* ListaItems = NULL;
 
 	int rows, cols;
 	int q, p;
