@@ -17,3 +17,4 @@ void Terminar(void);
 void Inicializar(void);
 
 void GetTermSize(int * rows, int * cols) ;
+void getAreaNivel(int * rows, int * cols);
