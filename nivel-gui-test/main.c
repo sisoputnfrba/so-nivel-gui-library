@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <curses.h>
 
-
 int main(void) {
 
 	ITEM_NIVEL* ListaItems = NULL;
@@ -119,4 +118,5 @@ int main(void) {
 	BorrarItem(&ListaItems, 'F');
 
 	nivel_gui_terminar();
+
 }

@@ -9,7 +9,27 @@ WINDOW * mainwin;
 
 int rows, cols;
 
-void nivel_gui_inicializar(void) {
+int inicializado = 0;
+
+
+// ------ Prototipos de Funciones utilitarias ------------
+
+void nivel_gui_get_term_size(int * rows, int * cols);
+int nivel_gui_int_validar_inicializado(void);
+void nivel_gui_print_perror(const char* message);
+
+// ------------------------------------------------------
+
+
+
+
+
+int nivel_gui_inicializar(void) {
+
+	if (nivel_gui_int_validar_inicializado()){
+			nivel_gui_print_perror("nivel_gui_inicializar: Library ya inicializada!");
+			return EXIT_FAILURE;
+		}
 
 	mainwin = initscr();
 	keypad(stdscr, TRUE);
@@ -26,10 +46,25 @@ void nivel_gui_inicializar(void) {
 	box(secwin, 0, 0);
 	wrefresh(secwin);
 
+	inicializado = 1;
+
+	return EXIT_SUCCESS;
+
 }
 
 
-void nivel_gui_dibujar(ITEM_NIVEL* items) {
+int nivel_gui_dibujar(ITEM_NIVEL* items) {
+
+	if (!nivel_gui_int_validar_inicializado()){
+		nivel_gui_print_perror("nivel_gui_dibujar: Library no inicializada!");
+		return EXIT_FAILURE;
+	}
+
+	if (items == NULL){
+		nivel_gui_print_perror("nivel_gui_dibujar: La lista de items no puede ser NULL");
+		return EXIT_FAILURE;
+	}
+
 
 	ITEM_NIVEL *temp = items;
 	int i = 0;
@@ -59,17 +94,48 @@ void nivel_gui_dibujar(ITEM_NIVEL* items) {
 	wrefresh(secwin);
 	wrefresh(mainwin);
 
+	return EXIT_SUCCESS;
+
 }
 
 
-void nivel_gui_terminar(void) {
+int nivel_gui_terminar(void) {
+
+		if (!nivel_gui_int_validar_inicializado()){
+			nivel_gui_print_perror("nivel_gui_terminar: Library no inicializada!");
+			return EXIT_FAILURE;
+		}
 
         delwin(mainwin);
         delwin(secwin);
         endwin();
         refresh();
 
+        return EXIT_SUCCESS;
+
 }
+
+
+int nivel_gui_get_area_nivel(int * rows, int * cols) {
+
+	if (!nivel_gui_int_validar_inicializado()){
+			nivel_gui_print_perror("nivel_gui_get_area_nivel: Library no inicializada!");
+			return EXIT_FAILURE;
+			}
+
+	if (rows == NULL || cols == NULL){
+		nivel_gui_print_perror("nivel_gui_get_area_nivel: Ninguno de los argumentos puede ser NULL");
+		return EXIT_FAILURE;
+	}
+
+
+	nivel_gui_get_term_size(rows, cols);
+	*rows = *rows - 4;
+	*cols = *cols - 2;
+
+	return EXIT_SUCCESS;
+}
+
 
 void nivel_gui_get_term_size(int * rows, int * cols) {
 
@@ -83,8 +149,13 @@ void nivel_gui_get_term_size(int * rows, int * cols) {
     *cols = ws.ws_col;
 }
 
-void nivel_gui_get_area_nivel(int * rows, int * cols) {
-	nivel_gui_get_term_size(rows, cols);
-	*rows = *rows - 4;
-	*cols = *cols - 2;
+int nivel_gui_int_validar_inicializado(void){
+	return inicializado;
 }
+
+void nivel_gui_print_perror(const char* message){
+	fprintf(stderr, "%s\n", message);
+}
+
+
+

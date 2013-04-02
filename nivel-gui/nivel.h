@@ -12,9 +12,7 @@ struct item {
 
 typedef struct item ITEM_NIVEL;
 
-void nivel_gui_dibujar(ITEM_NIVEL* items);
-void nivel_gui_terminar(void);
-void nivel_gui_inicializar(void);
-
-void nivel_gui_get_term_size(int * rows, int * cols) ;
-void nivel_gui_get_area_nivel(int * rows, int * cols);
+int nivel_gui_dibujar(ITEM_NIVEL* items);
+int nivel_gui_terminar(void);
+int nivel_gui_inicializar(void);
+int nivel_gui_get_area_nivel(int * rows, int * cols);
