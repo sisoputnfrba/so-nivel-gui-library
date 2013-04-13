@@ -10,11 +10,11 @@ Para usarlo:
 Build & Run desde Consola
 -------------------------------
 
-1) Bajarlo en un directorio
-2) En ese mismo directorio compilar ejecutando: make
-3) Ir a el directorio testnivel: cd testnivel
-4) Ejecutar el codigo de ejemplo: ./nivel
-5) Mover un personaje con las flechas y el otro con WASD. Salir con Q
+1) Bajarlo en un directorio<br>
+2) En ese mismo directorio compilar ejecutando: make ; make install<br>
+3) Ir a el directorio testnivel: cd testnivel<br>
+4) Ejecutar el codigo de ejemplo: ./nivel<br>
+5) Mover un personaje con las flechas y el otro con WASD. Salir con Q<br>
 
 
 
