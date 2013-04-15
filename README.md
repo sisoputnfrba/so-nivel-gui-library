@@ -30,7 +30,7 @@ Hay al menos dos formas de armar los proyectos en eclipse:
 2- Eclipse half-managed:  y la otra opcion es crearlos medio "crudos" y hacer que usen los makefiles existentes.
 
 
-Por ahora voy por la opcion 2, que es la que explico aca:
+Se explica la opción 2:
 
 Eclipse half-manager (with git included!):
 
@@ -40,12 +40,11 @@ Eclipse half-manager (with git included!):
 	- Destildar C++ y elegir Linux GCC para "indexer settings". Indicar la location del  proyecto de la library
 - Deberia haberse creado el proyecto, suceptible de ser buildeado. Deberia usar el makefile nuestro y no el del eclipse. Compilar y buildear para ver que todo esta bien.
 - Repetir lo de importar para el segundo proyecto.
-- Luego, borrar los fucking proyectos haciendo "Delete", pero SIN ELEGIR "Delete project contents on disk..."
+- Luego, borrar los proyectos haciendo "Delete", pero SIN ELEGIR "Delete project contents on disk..."
 - Import > Git > Projects from Git > Local > so-nivel-gui-lbrary > "Import existing projects" (y aca abrir el arbol y elegir uno de los dos proyectos > Finish
 - Repetir el paso anterior para el otro proyecto.
-- Agregar al proyecto de test la refencia al proyecto de la library (es para que el eclipse no rompa las bolas con sus validaciones, dado que compilar compila igual por el makefile)
+- Agregar al proyecto de test la refencia al proyecto de la library (es para que el eclipse no realice sus validaciones, dado que compilar compila igual por el makefile)
 
-Todo esto porque no encontre un "Import C Project from Git Repository". Si alguien lo encuentra, me avisa.
 
 
 
