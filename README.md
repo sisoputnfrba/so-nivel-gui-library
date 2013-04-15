@@ -43,7 +43,7 @@ Eclipse half-manager (with git included!):
 - Luego, borrar los proyectos haciendo "Delete", pero SIN ELEGIR "Delete project contents on disk..."
 - Import > Git > Projects from Git > Local > so-nivel-gui-lbrary > "Import existing projects" (y aca abrir el arbol y elegir uno de los dos proyectos > Finish
 - Repetir el paso anterior para el otro proyecto.
-- Agregar al proyecto de test la refencia al proyecto de la library (es para que el eclipse no realice sus validaciones, dado que compilar compila igual por el makefile)
+- Agregar al proyecto de test la referencia al proyecto de la library (es para que el eclipse no realice sus validaciones, dado que compilar compila igual por el makefile)
 
 
 
