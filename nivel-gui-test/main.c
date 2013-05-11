@@ -23,7 +23,7 @@ int main(void) {
 	CrearPersonaje(&ListaItems, '@', p, q);
 	CrearPersonaje(&ListaItems, '#', x, y);
 
-	CrearCaja(&ListaItems, 'H', 40, 20, 5); 
+	CrearCaja(&ListaItems, 'H', 26, 10, 5); 
 	CrearCaja(&ListaItems, 'M', 8, 15, 3);
 	CrearCaja(&ListaItems, 'F', 19, 9, 2);
 
@@ -92,7 +92,7 @@ int main(void) {
 		MoverPersonaje(ListaItems, '@', p, q);
 		MoverPersonaje(ListaItems, '#', x, y);
 
-		if (   ((p == 40) && (q == 20)) || ((x == 40) && (y == 20)) ) {
+		if (   ((p == 26) && (q == 10)) || ((x == 26) && (y == 10)) ) {
 			restarRecurso(ListaItems, 'H');
 		}
 
