@@ -17,15 +17,15 @@ int main(void) {
 
     nivel_gui_get_area_nivel(&rows, &cols);
 
-	q = rows;
 	p = cols;
+	q = rows;
 
-	CrearPersonaje(&ListaItems, '@', q, p);
+	CrearPersonaje(&ListaItems, '@', p, q);
 	CrearPersonaje(&ListaItems, '#', x, y);
 
-	CrearCaja(&ListaItems, 'H', 20, 40, 5); 
-	CrearCaja(&ListaItems, 'M', 15, 8, 3);
-	CrearCaja(&ListaItems, 'F', 9, 19, 2);
+	CrearCaja(&ListaItems, 'H', 40, 20, 5); 
+	CrearCaja(&ListaItems, 'M', 8, 15, 3);
+	CrearCaja(&ListaItems, 'F', 19, 9, 2);
 
 	nivel_gui_dibujar(ListaItems);
 
@@ -89,8 +89,8 @@ int main(void) {
 			break;
 		}
 
-		MoverPersonaje(ListaItems, '@', q, p);
-		MoverPersonaje(ListaItems, '#', y, x);
+		MoverPersonaje(ListaItems, '@', p, q);
+		MoverPersonaje(ListaItems, '#', x, y);
 
 		if (   ((p == 40) && (q == 20)) || ((x == 40) && (y == 20)) ) {
 			restarRecurso(ListaItems, 'H');
