@@ -41,7 +41,7 @@ int nivel_gui_inicializar(void) {
 	refresh();
 
 	nivel_gui_get_term_size(&rows, &cols);
-	secwin = newwin(rows - 2, cols, 0, 0);
+	secwin = newwin(rows - 3, cols, 0, 0);
 	box(secwin, 0, 0);
 	wrefresh(secwin);
 
@@ -52,7 +52,7 @@ int nivel_gui_inicializar(void) {
 }
 
 
-int nivel_gui_dibujar(ITEM_NIVEL* items) {
+int nivel_gui_dibujar(ITEM_NIVEL* items, char* nom_nivel) {
 
 	if (!nivel_gui_int_validar_inicializado()){
 		nivel_gui_print_perror("nivel_gui_dibujar: Library no inicializada!");
@@ -72,6 +72,8 @@ int nivel_gui_dibujar(ITEM_NIVEL* items) {
 	box(secwin, 0, 0);
 	wbkgd(secwin, COLOR_PAIR(1));
 
+	move(rows - 3, 2);
+	printw("Nivel: %s", nom_nivel);
 	move(rows - 2, 2);
 	printw("Recursos: ");
 
@@ -129,7 +131,7 @@ int nivel_gui_get_area_nivel(int * rows, int * cols) {
 
 
 	nivel_gui_get_term_size(rows, cols);
-	*rows = *rows - 4;
+	*rows = *rows - 5;
 	*cols = *cols - 2;
 
 	return EXIT_SUCCESS;

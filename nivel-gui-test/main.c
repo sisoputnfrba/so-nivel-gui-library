@@ -27,7 +27,7 @@ int main(void) {
 	CrearCaja(&ListaItems, 'M', 8, 15, 3);
 	CrearCaja(&ListaItems, 'F', 19, 9, 2);
 
-	nivel_gui_dibujar(ListaItems);
+	nivel_gui_dibujar(ListaItems, "Test Chamber 04");
 
 	while ( 1 ) {
 		int key = getch();
@@ -108,7 +108,7 @@ int main(void) {
 			BorrarItem(&ListaItems, '#'); //si chocan, borramos uno (!)
 		}
 
-		nivel_gui_dibujar(ListaItems);
+		nivel_gui_dibujar(ListaItems, "Test Chamber 04");
 	}
 
 	BorrarItem(&ListaItems, '#');
