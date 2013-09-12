@@ -3,6 +3,16 @@
 #include <stdlib.h>
 #include <curses.h>
 
+/*
+ * @NAME: rnd
+ * @DESC: Modifica el numero en +1,0,-1, sin pasarse del maximo dado
+ */
+void rnd(int *x, int max){
+	*x += (rand() % 3) - 1;
+	*x = (*x<max) ? *x : max-1;
+	*x = (*x>0) ? *x : 1;
+}
+
 int main(void) {
 
 	ITEM_NIVEL* ListaItems = NULL;
