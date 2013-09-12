@@ -13,6 +13,9 @@ int main(void) {
 	int x = 1;
 	int y = 1;
 
+	int ex1 = 10, ey1 = 14;
+	int ex2 = 20, ey2 = 3;
+
 	nivel_gui_inicializar();
 
     nivel_gui_get_area_nivel(&rows, &cols);
@@ -22,6 +25,9 @@ int main(void) {
 
 	CrearPersonaje(&ListaItems, '@', p, q);
 	CrearPersonaje(&ListaItems, '#', x, y);
+
+	CrearEnemigo(&ListaItems, '1', ex1, ey1);
+	CrearEnemigo(&ListaItems, '2', ex2, ey2);
 
 	CrearCaja(&ListaItems, 'H', 26, 10, 5); 
 	CrearCaja(&ListaItems, 'M', 8, 15, 3);
@@ -89,6 +95,14 @@ int main(void) {
 			break;
 		}
 
+
+		rnd(&ex1, cols);
+		rnd(&ey1, rows);
+		rnd(&ex2, cols);
+		rnd(&ey2, rows);
+		MoverPersonaje(ListaItems, '1', ex1, ey1 );
+		MoverPersonaje(ListaItems, '2', ex2, ey2 );
+
 		MoverPersonaje(ListaItems, '@', p, q);
 		MoverPersonaje(ListaItems, '#', x, y);
 
@@ -113,6 +127,10 @@ int main(void) {
 
 	BorrarItem(&ListaItems, '#');
 	BorrarItem(&ListaItems, '@');
+
+	BorrarItem(&ListaItems, '1');
+	BorrarItem(&ListaItems, '2');
+
 	BorrarItem(&ListaItems, 'H');
 	BorrarItem(&ListaItems, 'M');
 	BorrarItem(&ListaItems, 'F');

@@ -1,5 +1,6 @@
 #define PERSONAJE_ITEM_TYPE 0
 #define RECURSO_ITEM_TYPE 1
+#define ENEMIGO_ITEM_TYPE 2
 
 struct item {
 	char id;
@@ -12,6 +13,7 @@ struct item {
 
 typedef struct item ITEM_NIVEL;
 
+void rnd(int *x, int max);
 int nivel_gui_dibujar(ITEM_NIVEL* items, char* nom_nivel);
 int nivel_gui_terminar(void);
 int nivel_gui_inicializar(void);

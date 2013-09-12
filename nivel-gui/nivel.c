@@ -19,10 +19,20 @@ void nivel_gui_print_perror(const char* message);
 
 // ------------------------------------------------------
 
+/*
+ * @NAME: rnd
+ * @DESC: Modifica el numero en +1,0,-1, sin pasarse del maximo dado
+ */
+void rnd(int *x, int max){
+	*x += (rand() % 3) - 1;
+	*x = (*x<max) ? *x : max-1;
+	*x = (*x>0) ? *x : 1;
+}
 
-
-
-
+/*
+ * @NAME: nivel_gui_inicializar
+ * @DESC: Inicializa el espacio de dibujo
+ */
 int nivel_gui_inicializar(void) {
 
 	if (nivel_gui_int_validar_inicializado()){
@@ -37,6 +47,7 @@ int nivel_gui_inicializar(void) {
 	init_pair(1,COLOR_GREEN, COLOR_BLACK);
 	init_pair(2,COLOR_WHITE, COLOR_BLACK);
 	init_pair(3,COLOR_BLACK, COLOR_YELLOW);
+	init_pair(4,COLOR_BLACK, COLOR_BLUE);
 	box(stdscr, 0, 0);
 	refresh();
 
@@ -51,7 +62,13 @@ int nivel_gui_inicializar(void) {
 
 }
 
-
+/*
+ * @NAME: nivel_gui_dibujar
+ * @DESC: Dibuja cada entidad en la lista de items
+ * @PARAMS:
+ * 		items	  - lista de objetos a dibujar
+ * 		nom_nivel - nombre del nivel
+ */
 int nivel_gui_dibujar(ITEM_NIVEL* items, char* nom_nivel) {
 
 	if (!nivel_gui_int_validar_inicializado()){
@@ -79,12 +96,14 @@ int nivel_gui_dibujar(ITEM_NIVEL* items, char* nom_nivel) {
 
 	while (temp != NULL) {
 		wmove (secwin, temp->posy, temp->posx);
-		if (temp->item_type) {
+		if(temp->item_type == ENEMIGO_ITEM_TYPE) {
+			waddch(secwin, '*' | COLOR_PAIR(4));
+		} else	if (temp->item_type == RECURSO_ITEM_TYPE) {
 			waddch(secwin, temp->id | COLOR_PAIR(3));
-		} else {
+		} else if(temp->item_type == PERSONAJE_ITEM_TYPE) {
 			waddch(secwin, temp->id | COLOR_PAIR(2));
 		}
-		if (temp->item_type) {
+		if (temp->item_type == RECURSO_ITEM_TYPE) {
 			move(rows - 2, 7 * i + 3 + 9);
 			printw("%c: %d - ", temp->id, temp->quantity);
 			i++;
@@ -99,7 +118,10 @@ int nivel_gui_dibujar(ITEM_NIVEL* items, char* nom_nivel) {
 
 }
 
-
+/*
+ * @NAME: nivel_gui_terminar
+ * @DESC: Termina el nivel de forma prolija
+ */
 int nivel_gui_terminar(void) {
 
 		if (!nivel_gui_int_validar_inicializado()){
@@ -116,7 +138,13 @@ int nivel_gui_terminar(void) {
 
 }
 
-
+/*
+ * @NAME: nivel_gui_get_area_nivel
+ * @DESC: Devuelve el tamanio de la pantalla usable
+ * @PARAMS:
+ * 		rows - valor de retorno de filas
+ * 		cols - valor de retorno de columnas
+ */
 int nivel_gui_get_area_nivel(int * rows, int * cols) {
 
 	if (!nivel_gui_int_validar_inicializado()){
@@ -137,7 +165,13 @@ int nivel_gui_get_area_nivel(int * rows, int * cols) {
 	return EXIT_SUCCESS;
 }
 
-
+/*
+ * @NAME: nivel_gui_get_term_size
+ * @DESC: Devuelve el tamanio total de la pantalla
+ * @PARAMS:
+ * 		rows - valor de retorno de filas
+ * 		cols - valor de retorno de columnas
+ */
 void nivel_gui_get_term_size(int * rows, int * cols) {
 
     struct winsize ws;
@@ -150,10 +184,20 @@ void nivel_gui_get_term_size(int * rows, int * cols) {
     *cols = ws.ws_col;
 }
 
+/*
+ * @NAME: nivel_gui_int_validar_inicializado
+ * @DESC: Informa si se inicializo el nivel corectamente
+ */
 int nivel_gui_int_validar_inicializado(void){
 	return inicializado;
 }
 
+/*
+ * @NAME: nivel_gui_print_perror
+ * @DESC: Imprime un error en el nivel
+ * @PARAMS:
+ * 		message - mensaje a imprimir
+ */
 void nivel_gui_print_perror(const char* message){
 	fprintf(stderr, "%s\n", message);
 }

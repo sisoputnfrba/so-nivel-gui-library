@@ -20,6 +20,10 @@ void CrearPersonaje(ITEM_NIVEL** ListaItems, char id, int x , int y) {
         CrearItem(ListaItems, id, x, y, PERSONAJE_ITEM_TYPE, 0);
 }
 
+void CrearEnemigo(ITEM_NIVEL** ListaItems, char id, int x , int y) {
+        CrearItem(ListaItems, id, x, y, ENEMIGO_ITEM_TYPE, 0);
+}
+
 void CrearCaja(ITEM_NIVEL** ListaItems, char id, int x , int y, int cant) {
         CrearItem(ListaItems, id, x, y, RECURSO_ITEM_TYPE, cant);
 }
@@ -59,6 +63,9 @@ void MoverPersonaje(ITEM_NIVEL* ListaItems, char id, int x, int y) {
 
 }
 
+void MoverEnemigo(ITEM_NIVEL* ListaItems, char id, int x, int y) {
+	MoverPersonaje(ListaItems, id, x, y);
+}
 
 void restarRecurso(ITEM_NIVEL* ListaItems, char id) {
 
