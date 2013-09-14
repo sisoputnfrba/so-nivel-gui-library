@@ -14,7 +14,6 @@ typedef struct item {
 	int posy;
 	char item_type; // PERSONAJE o CAJA_DE_RECURSOS
 	int quantity;
-	struct item *next;
 } ITEM_NIVEL;
 
 void rnd(int *x, int max);

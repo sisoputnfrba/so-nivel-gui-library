@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <sys/ioctl.h>
 #include <curses.h>
+
 #include "nivel.h"
 
 
