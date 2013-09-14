@@ -1,5 +1,6 @@
-INCLUDE_COMMONS=$(HOME)/projects/commons-library/src
-SO_COMMONS=$(HOME)/projects/commons-library/dist/Debug/GNU-Linux-x86
+# Completar con sus paths
+INCLUDE_COMMONS=
+SO_COMMONS=
 COMMONS_NAME=commons-library
 
 NIVEL_SO=libnivel-gui.so
