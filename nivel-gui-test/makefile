@@ -1,13 +1,11 @@
-INCLUDE_COMMONS=$(HOME)/projects/commons-library/src
-SO_COMMONS=$(HOME)/projects/commons-library/dist/Debug/GNU-Linux-x86
-
-COMMONS_NAME=commons-library
-NIVEL_GUI_NAME=nivel-gui
+COMMONS_DIR_HEADERS=/home/utnso/so-commons-library/src
+COMMONS_DIR_BIN=/home/utnso/so-commons-library/Debug
+COMMONS_NAME=so-commons-library
 
 all: compile
 	
 compile:
-	gcc main.c -I$(INCLUDE_COMMONS) -L$(SO_COMMONS) -l$(COMMONS_NAME) -l$(NIVEL_GUI_NAME) -lncurses -o nivel
+	gcc main.c -I$(COMMONS_DIR_HEADERS) -I../nivel-gui -L$(COMMONS_DIR_BIN) -L../nivel-gui -l$(COMMONS_NAME) -lnivel-gui -lncurses -o nivel
 
 clean:
 	rm -f nivel

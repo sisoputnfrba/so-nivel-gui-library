@@ -1,14 +1,14 @@
 # Completar con sus paths
-INCLUDE_COMMONS=
-SO_COMMONS=
-COMMONS_NAME=commons-library
+COMMONS_DIR_HEADERS=/home/utnso/so-commons-library/src
+COMMONS_DIR_BIN=/home/utnso/so-commons-library/Debug
+COMMONS_NAME=so-commons-library
 
 NIVEL_SO=libnivel-gui.so
 INSTALL_DIR=/usr/lib
 INSTALL_DIR_INCLUDE=/usr/include
 
 compile:
-	gcc -shared -fPIC tad_items.c nivel.c -I$(INCLUDE_COMMONS) -L$(SO_COMMONS) -o $(NIVEL_SO) -l$(COMMONS_NAME)
+	gcc -shared -fPIC tad_items.c nivel.c -I$(COMMONS_DIR_HEADERS) -L$(COMMONS_DIR_BIN) -o $(NIVEL_SO) -l$(COMMONS_NAME)
 
 install: compile
 	cp -u $(NIVEL_SO) $(INSTALL_DIR)
