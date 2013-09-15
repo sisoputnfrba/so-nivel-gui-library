@@ -16,7 +16,7 @@ typedef struct item {
 	int quantity;
 } ITEM_NIVEL;
 
-void rnd(int *x, int max);
+
 int nivel_gui_dibujar(t_list* items, char* nombre_nivel);
 int nivel_gui_terminar(void);
 int nivel_gui_inicializar(void);
