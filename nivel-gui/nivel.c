@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "nivel.h"
 #include <sys/ioctl.h>
 #include <curses.h>
+
+#include "nivel.h"
 
 
 static WINDOW * secwin;
@@ -13,9 +14,9 @@ static int inicializado = 0;
 
 // ------ Prototipos de Funciones utilitarias ------------
 
-void nivel_gui_get_term_size(int * rows, int * cols);
+void nivel_gui_get_term_size(int * filas, int * columnas);
 int nivel_gui_int_validar_inicializado(void);
-void nivel_gui_print_perror(const char* message);
+void nivel_gui_print_perror(const char* mensaje);
 
 // ------------------------------------------------------
 
@@ -26,9 +27,9 @@ void nivel_gui_print_perror(const char* message);
 int nivel_gui_inicializar(void) {
 
 	if (nivel_gui_int_validar_inicializado()){
-			nivel_gui_print_perror("nivel_gui_inicializar: Library ya inicializada!");
-			return EXIT_FAILURE;
-		}
+                nivel_gui_print_perror("nivel_gui_inicializar: Library ya inicializada!");
+                return EXIT_FAILURE;
+        }
 
 	mainwin = initscr();
 	keypad(stdscr, TRUE);
@@ -57,9 +58,9 @@ int nivel_gui_inicializar(void) {
  * @DESC: Dibuja cada entidad en la lista de items
  * @PARAMS:
  * 		items	  - lista de objetos a dibujar
- * 		nom_nivel - nombre del nivel
+ * 		nombre_nivel - nombre del nivel
  */
-int nivel_gui_dibujar(ITEM_NIVEL* items, char* nom_nivel) {
+int nivel_gui_dibujar(t_list* items, char* nombre_nivel) {
 
 	if (!nivel_gui_int_validar_inicializado()){
 		nivel_gui_print_perror("nivel_gui_dibujar: Library no inicializada!");
@@ -71,36 +72,35 @@ int nivel_gui_dibujar(ITEM_NIVEL* items, char* nom_nivel) {
 		return EXIT_FAILURE;
 	}
 
-
-	ITEM_NIVEL *temp = items;
 	int i = 0;
-
 	werase(secwin);
 	box(secwin, 0, 0);
 	wbkgd(secwin, COLOR_PAIR(1));
 
 	move(rows - 3, 2);
-	printw("Nivel: %s", nom_nivel);
+	printw("Nivel: %s", nombre_nivel);
 	move(rows - 2, 2);
 	printw("Recursos: ");
 
-	while (temp != NULL) {
-		wmove (secwin, temp->posy, temp->posx);
-		if(temp->item_type == ENEMIGO_ITEM_TYPE) {
-			waddch(secwin, '*' | COLOR_PAIR(4));
-		} else	if (temp->item_type == RECURSO_ITEM_TYPE) {
-			waddch(secwin, temp->id | COLOR_PAIR(3));
-		} else if(temp->item_type == PERSONAJE_ITEM_TYPE) {
-			waddch(secwin, temp->id | COLOR_PAIR(2));
-		}
-		if (temp->item_type == RECURSO_ITEM_TYPE) {
-			move(rows - 2, 7 * i + 3 + 9);
-			printw("%c: %d - ", temp->id, temp->quantity);
-			i++;
-		}
-		temp = temp->next;
-
-	}
+        
+        void _draw_element(ITEM_NIVEL* item) {
+            wmove(secwin, item->posy, item->posx);
+            if(item->item_type == ENEMIGO_ITEM_TYPE) {
+                    waddch(secwin, '*' | COLOR_PAIR(4));
+            } else if (item->item_type == RECURSO_ITEM_TYPE) {
+                    waddch(secwin, item->id | COLOR_PAIR(3));
+            } else if(item->item_type == PERSONAJE_ITEM_TYPE) {
+                    waddch(secwin, item->id | COLOR_PAIR(2));
+            }
+            if (item->item_type == RECURSO_ITEM_TYPE) {
+                move(rows - 2, 7 * i + 3 + 9);
+                printw("%c: %d - ", item->id, item->quantity);
+                i++;
+            }
+        }
+        
+        list_iterate(items, (void*) _draw_element);
+       
 	wrefresh(secwin);
 	wrefresh(mainwin);
 
@@ -114,10 +114,10 @@ int nivel_gui_dibujar(ITEM_NIVEL* items, char* nom_nivel) {
  */
 int nivel_gui_terminar(void) {
 
-		if (!nivel_gui_int_validar_inicializado()){
-			nivel_gui_print_perror("nivel_gui_terminar: Library no inicializada!");
-			return EXIT_FAILURE;
-		}
+        if (!nivel_gui_int_validar_inicializado()){
+                nivel_gui_print_perror("nivel_gui_terminar: Library no inicializada!");
+                return EXIT_FAILURE;
+        }
 
         delwin(mainwin);
         delwin(secwin);

@@ -1,8 +1,9 @@
-#include "tad_items.h"
+
+#include <tad_items.h>
 
 #include <stdlib.h>
 #include <curses.h>
-
+#include <commons/collections/list.h>
 /*
  * @NAME: rnd
  * @DESC: Modifica el numero en +1,0,-1, sin pasarse del maximo dado
@@ -14,8 +15,7 @@ void rnd(int *x, int max){
 }
 
 int main(void) {
-
-	ITEM_NIVEL* ListaItems = NULL;
+        t_list* items = list_create();
 
 	int rows, cols;
 	int q, p;
@@ -33,17 +33,17 @@ int main(void) {
 	p = cols;
 	q = rows;
 
-	CrearPersonaje(&ListaItems, '@', p, q);
-	CrearPersonaje(&ListaItems, '#', x, y);
+	CrearPersonaje(items, '@', p, q);
+	CrearPersonaje(items, '#', x, y);
 
-	CrearEnemigo(&ListaItems, '1', ex1, ey1);
-	CrearEnemigo(&ListaItems, '2', ex2, ey2);
+	CrearEnemigo(items, '1', ex1, ey1);
+	CrearEnemigo(items, '2', ex2, ey2);
 
-	CrearCaja(&ListaItems, 'H', 26, 10, 5); 
-	CrearCaja(&ListaItems, 'M', 8, 15, 3);
-	CrearCaja(&ListaItems, 'F', 19, 9, 2);
+	CrearCaja(items, 'H', 26, 10, 5); 
+	CrearCaja(items, 'M', 8, 15, 3);
+	CrearCaja(items, 'F', 19, 9, 2);
 
-	nivel_gui_dibujar(ListaItems, "Test Chamber 04");
+	nivel_gui_dibujar(items, "Test Chamber 04");
 
 	while ( 1 ) {
 		int key = getch();
@@ -110,40 +110,40 @@ int main(void) {
 		rnd(&ey1, rows);
 		rnd(&ex2, cols);
 		rnd(&ey2, rows);
-		MoverPersonaje(ListaItems, '1', ex1, ey1 );
-		MoverPersonaje(ListaItems, '2', ex2, ey2 );
+		MoverPersonaje(items, '1', ex1, ey1 );
+		MoverPersonaje(items, '2', ex2, ey2 );
 
-		MoverPersonaje(ListaItems, '@', p, q);
-		MoverPersonaje(ListaItems, '#', x, y);
+		MoverPersonaje(items, '@', p, q);
+		MoverPersonaje(items, '#', x, y);
 
 		if (   ((p == 26) && (q == 10)) || ((x == 26) && (y == 10)) ) {
-			restarRecurso(ListaItems, 'H');
+			restarRecurso(items, 'H');
 		}
 
 		if (   ((p == 19) && (q == 9)) || ((x == 19) && (y == 9)) ) {
-			restarRecurso(ListaItems, 'F');
+			restarRecurso(items, 'F');
 		}
 
 		if (   ((p == 8) && (q == 15)) || ((x == 8) && (y == 15)) ) {
-			restarRecurso(ListaItems, 'M');	
+			restarRecurso(items, 'M');	
 		}
 
 		if((p == x) && (q == y)) {
-			BorrarItem(&ListaItems, '#'); //si chocan, borramos uno (!)
+			BorrarItem(items, '#'); //si chocan, borramos uno (!)
 		}
 
-		nivel_gui_dibujar(ListaItems, "Test Chamber 04");
+		nivel_gui_dibujar(items, "Test Chamber 04");
 	}
 
-	BorrarItem(&ListaItems, '#');
-	BorrarItem(&ListaItems, '@');
+	BorrarItem(items, '#');
+	BorrarItem(items, '@');
 
-	BorrarItem(&ListaItems, '1');
-	BorrarItem(&ListaItems, '2');
+	BorrarItem(items, '1');
+	BorrarItem(items, '2');
 
-	BorrarItem(&ListaItems, 'H');
-	BorrarItem(&ListaItems, 'M');
-	BorrarItem(&ListaItems, 'F');
+	BorrarItem(items, 'H');
+	BorrarItem(items, 'M');
+	BorrarItem(items, 'F');
 
 	nivel_gui_terminar();
 
