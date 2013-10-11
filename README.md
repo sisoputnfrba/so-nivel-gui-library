@@ -21,9 +21,6 @@ los paths correspondientes de la biblioteca commons
 5) Ejecutar el codigo de ejemplo: ./nivel <br>
 6) Mover un personaje con las flechas y el otro con WASD. Salir con Q<br>
 
-
-
-
 -------------------------------
 Build & Run desde Eclipse
 -------------------------------
@@ -51,6 +48,17 @@ Eclipse half-manager (with git included!):
 - Agregar al proyecto de test la referencia al proyecto de la library (es para que el eclipse no realice sus validaciones, dado que compilar compila igual por el makefile)
 
 
+-------------------------------
+Como usarlo
+-------------------------------
 
+1 - Seguir los pasos de instalación descriptos en la sección 
+'Build & Run desde Consola', esto habilita que la biblioteca 
+ya este disponible en el sistema para ser usada.
 
+2 - Desde el proyecto que se quiera usar la biblioteca se 
+debe configurar lo siguiente:
 
+ + -lnivel-gui (en el linker)
+ + #include <nivel-gui.h> (en el archivo que se necesite usar la biblioteca)
+ 
