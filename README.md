@@ -3,6 +3,9 @@ Este repositorio contiene:
 - El codigo fuente de la biblioteca para graficar el nivel (libnivel-gui.so)
 - El programa de ejemplo (nivel-gui-test)
 
+Notas: Esta biblioteca depende de la biblioteca commons que se encuentra en:<br/>
+https://github.com/sisoputnfrba/so-commons-library
+
 
 Para usarlo:
 
@@ -11,10 +14,12 @@ Build & Run desde Consola
 -------------------------------
 
 1) Bajarlo en un directorio<br>
-2) En ese mismo directorio compilar ejecutando: make ; make install<br>
-3) Ir a el directorio testnivel: cd testnivel<br>
-4) Ejecutar el codigo de ejemplo: ./nivel<br>
-5) Mover un personaje con las flechas y el otro con WASD. Salir con Q<br>
+2) Completar los makefile de los proyectos 'nivel-gui' y 'nivel-gui-test' con 
+los paths correspondientes de la biblioteca commons
+3) En el directorio padre compilar ejecutando: make && make install<br>
+4) Ir a el directorio testnivel: cd nivel-gui-test<br>
+5) Ejecutar el codigo de ejemplo: ./nivel <br>
+6) Mover un personaje con las flechas y el otro con WASD. Salir con Q<br>
 
 
 
