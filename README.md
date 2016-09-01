@@ -3,9 +3,11 @@ Este repositorio contiene:
 - El codigo fuente de la biblioteca para graficar el nivel (libnivel-gui.so)
 - El programa de ejemplo (nivel-gui-test)
 
-Notas: Esta biblioteca depende de la biblioteca commons que se encuentra en:<br/>
+Notas:
+* Esta biblioteca depende de la biblioteca commons que se encuentra en:<br/>
 https://github.com/sisoputnfrba/so-commons-library
-
+* Esta biblioteca requiere tener instalada la biblioteca `ncurses`.  
+Para instalarla, abrir una consola y ejecutar `sudo apt-get install libncurses5-dev`
 
 Para usarlo:
 
@@ -14,12 +16,10 @@ Build & Run desde Consola
 -------------------------------
 
 1) Bajarlo en un directorio<br>
-2) Completar los makefile de los proyectos 'nivel-gui' y 'nivel-gui-test' con 
-los paths correspondientes de la biblioteca commons
-3) En el directorio padre compilar ejecutando: make && make install<br>
-4) Ir a el directorio testnivel: cd nivel-gui-test<br>
-5) Ejecutar el codigo de ejemplo: ./nivel <br>
-6) Mover un personaje con las flechas y el otro con WASD. Salir con Q<br>
+2) En el directorio padre compilar ejecutando: `make && make install`<br>
+3) Ir a el directorio testnivel: `cd nivel-gui-test`<br>
+4) Ejecutar el codigo de ejemplo: `./nivel` <br>
+5) Mover un personaje con las flechas y el otro con WASD. Salir con Q<br>
 
 -------------------------------
 Build & Run desde Eclipse
@@ -36,7 +36,7 @@ Se explica la opción 2:
 
 Eclipse half-manager (with git included!):
 
-- Esta opcion no usa la LD_LIBRARY_PATH, por lo tanto compila y tira la library en /lib. Ergo, hay que hacer "sudo chmod o+w /lib" para tener permisos de escritura. 
+- Esta opcion no usa la LD_LIBRARY_PATH, por lo tanto compila y tira la library en /lib. Ergo, hay que hacer "sudo chmod o+w /lib" para tener permisos de escritura.
 - Desde el eclipse, clonarse el repo completo (Git Repository Exploring > Clone Git Repository...)
 - Luego, Import > C/C++ > Existing Code as Makefile Project
 	- Destildar C++ y elegir Linux GCC para "indexer settings". Indicar la location del  proyecto de la library
@@ -52,13 +52,12 @@ Eclipse half-manager (with git included!):
 Como usarlo
 -------------------------------
 
-1 - Seguir los pasos de instalación descriptos en la sección 
-'Build & Run desde Consola', esto habilita que la biblioteca 
+1 - Seguir los pasos de instalación descriptos en la sección
+'Build & Run desde Consola', esto habilita que la biblioteca
 ya este disponible en el sistema para ser usada.
 
-2 - Desde el proyecto que se quiera usar la biblioteca se 
+2 - Desde el proyecto que se quiera usar la biblioteca se
 debe configurar lo siguiente:
 
  + -lnivel-gui (en el linker)
  + #include <nivel-gui.h> (en el archivo que se necesite usar la biblioteca)
- 
