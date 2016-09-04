@@ -60,4 +60,5 @@ ya este disponible en el sistema para ser usada.
 debe configurar lo siguiente:
 
  + -lnivel-gui (en el linker)
+ + -lcurses (en el linker)
  + #include <nivel-gui.h> (en el archivo que se necesite usar la biblioteca)
