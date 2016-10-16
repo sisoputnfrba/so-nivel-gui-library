@@ -63,6 +63,15 @@ void restarRecurso(t_list* items, char id) {
         printf("WARN: Item %c no existente\n", id);
     }
 }
+void sumarRecurso(t_list* items, char id) {
+    ITEM_NIVEL* item = _search_item_by_id(items, id);
+
+    if (item != NULL) {
+        item->quantity++;
+    } else {
+        printf("WARN: Item %c no existente\n", id);
+    }
+}
 
 ITEM_NIVEL* _search_item_by_id(t_list* items, char id) {
     bool _search_by_id(ITEM_NIVEL* item) {
