@@ -7,6 +7,7 @@
 
 void BorrarItem(t_list* items, char id);
 void restarRecurso(t_list* items, char id);
+void sumarRecurso(t_list* items, char id);
 void MoverPersonaje(t_list* items, char personaje, int x, int y);
 void MoverEnemigo(t_list* items, char personaje, int x, int y);
 void CrearPersonaje(t_list* items, char id, int x , int y);
