@@ -11,6 +11,7 @@ static WINDOW * mainwin;
 static int rows, cols;
 static int inicializado = 0;
 
+t_list* NIVEL_GUI_ITEMS = NULL;
 
 // ------ Prototipos de Funciones utilitarias ------------
 
@@ -62,21 +63,18 @@ int nivel_gui_inicializar(void) {
 	box(secwin, 0, 0);
 	wrefresh(secwin);
 
+	NIVEL_GUI_ITEMS = list_create();
+
 	inicializado = 1;
 
 	return EXIT_SUCCESS;
 
 }
 
-int nivel_gui_dibujar(t_list* items, char* nombre_nivel) {
+int nivel_gui_dibujar(char* nombre_nivel) {
 
 	if (!nivel_gui_int_validar_inicializado()) {
 		nivel_gui_print_perror("nivel_gui_dibujar: Library no inicializada!");
-		return EXIT_FAILURE;
-	}
-
-	if (items == NULL) {
-		nivel_gui_print_perror("nivel_gui_dibujar: La lista de items no puede ser NULL");
 		return EXIT_FAILURE;
 	}
 
@@ -106,7 +104,7 @@ int nivel_gui_dibujar(t_list* items, char* nombre_nivel) {
 		}
 	}
 
-	list_iterate(items, (void*) _draw_element);
+	list_iterate(NIVEL_GUI_ITEMS, (void*) _draw_element);
 
 	wrefresh(secwin);
 	wrefresh(mainwin);
@@ -116,6 +114,7 @@ int nivel_gui_dibujar(t_list* items, char* nombre_nivel) {
 }
 
 int nivel_gui_terminar(void) {
+	list_destroy_and_destroy_elements(NIVEL_GUI_ITEMS, (void*) free);
 
 	if (!nivel_gui_int_validar_inicializado()) {
 		nivel_gui_print_perror("nivel_gui_terminar: Library no inicializada!");

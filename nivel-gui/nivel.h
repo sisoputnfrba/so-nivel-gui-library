@@ -28,7 +28,7 @@
 	*       items        - lista de objetos a dibujar
 	*       nombre_nivel - nombre del nivel
 	*/
-	int nivel_gui_dibujar(t_list* items, char* nombre_nivel);
+	int nivel_gui_dibujar(char* nombre_nivel);
 
 	/*
 	* @NAME: nivel_gui_terminar

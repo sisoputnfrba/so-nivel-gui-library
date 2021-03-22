@@ -15,8 +15,6 @@ void rnd(int *x, int max) {
 }
 
 int main(void) {
-	t_list* items = list_create();
-
 	int rows, cols;
 	int q, p;
 
@@ -33,17 +31,17 @@ int main(void) {
 	p = cols;
 	q = rows;
 
-	crear_personaje(items, '@', p, q);
-	crear_personaje(items, '#', x, y);
+	crear_personaje('@', p, q);
+	crear_personaje('#', x, y);
 
-	crear_enemigo(items, '1', ex1, ey1);
-	crear_enemigo(items, '2', ex2, ey2);
+	crear_enemigo('1', ex1, ey1);
+	crear_enemigo('2', ex2, ey2);
 
-	crear_caja(items, 'H', 26, 10, 5); 
-	crear_caja(items, 'M', 8, 15, 3);
-	crear_caja(items, 'F', 19, 9, 2);
+	crear_caja('H', 26, 10, 5); 
+	crear_caja('M', 8, 15, 3);
+	crear_caja('F', 19, 9, 2);
 
-	nivel_gui_dibujar(items, "Test Chamber 04");
+	nivel_gui_dibujar("Test Chamber 04");
 
 	while ( 1 ) {
 		int key = getch();
@@ -109,40 +107,30 @@ int main(void) {
 		rnd(&ey1, rows);
 		rnd(&ex2, cols);
 		rnd(&ey2, rows);
-		mover_personaje(items, '1', ex1, ey1 );
-		mover_personaje(items, '2', ex2, ey2 );
+		mover_personaje('1', ex1, ey1 );
+		mover_personaje('2', ex2, ey2 );
 
-		mover_personaje(items, '@', p, q);
-		mover_personaje(items, '#', x, y);
+		mover_personaje('@', p, q);
+		mover_personaje('#', x, y);
 
 		if (   ((p == 26) && (q == 10)) || ((x == 26) && (y == 10)) ) {
-			restar_recurso(items, 'H');
+			restar_recurso('H');
 		}
 
 		if (   ((p == 19) && (q == 9)) || ((x == 19) && (y == 9)) ) {
-			restar_recurso(items, 'F');
+			restar_recurso('F');
 		}
 
 		if (   ((p == 8) && (q == 15)) || ((x == 8) && (y == 15)) ) {
-			restar_recurso(items, 'M');	
+			restar_recurso('M');	
 		}
 
 		if((p == x) && (q == y)) {
-			borrar_item(items, '#'); //si chocan, borramos uno (!)
+			borrar_item('#'); //si chocan, borramos uno (!)
 		}
 
-		nivel_gui_dibujar(items, "Test Chamber 04");
+		nivel_gui_dibujar("Test Chamber 04");
 	}
-
-	borrar_item(items, '#');
-	borrar_item(items, '@');
-
-	borrar_item(items, '1');
-	borrar_item(items, '2');
-
-	borrar_item(items, 'H');
-	borrar_item(items, 'M');
-	borrar_item(items, 'F');
 
 	nivel_gui_terminar();
 
