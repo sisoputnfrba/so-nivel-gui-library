@@ -7,7 +7,7 @@
 
 ITEM_NIVEL* _search_item_by_id(t_list* items, char id);
 
-void CrearItem(t_list* items, char id, int x , int y, char tipo, int cant_rec) {
+void crear_item(t_list* items, char id, int x , int y, char tipo, int cant_rec) {
 	ITEM_NIVEL * item = malloc(sizeof(ITEM_NIVEL));
 
 	item->id = id;
@@ -19,19 +19,19 @@ void CrearItem(t_list* items, char id, int x , int y, char tipo, int cant_rec) {
 	list_add(items, item);
 }
 
-void CrearPersonaje(t_list* items, char id, int x , int y) {
-	CrearItem(items, id, x, y, PERSONAJE_ITEM_TYPE, 0);
+void crear_personaje(t_list* items, char id, int x , int y) {
+	crear_item(items, id, x, y, PERSONAJE_ITEM_TYPE, 0);
 }
 
-void CrearEnemigo(t_list* items, char id, int x , int y) {
-	CrearItem(items, id, x, y, ENEMIGO_ITEM_TYPE, 0);
+void crear_enemigo(t_list* items, char id, int x , int y) {
+	crear_item(items, id, x, y, ENEMIGO_ITEM_TYPE, 0);
 }
 
-void CrearCaja(t_list* items, char id, int x , int y, int cant) {
-	CrearItem(items, id, x, y, RECURSO_ITEM_TYPE, cant);
+void crear_caja(t_list* items, char id, int x , int y, int cant) {
+	crear_item(items, id, x, y, RECURSO_ITEM_TYPE, cant);
 }
 
-void BorrarItem(t_list* items, char id) {
+void borrar_item(t_list* items, char id) {
 	bool _search_by_id(ITEM_NIVEL* item) {
 		return item->id == id;
 	}
@@ -39,7 +39,7 @@ void BorrarItem(t_list* items, char id) {
 	list_remove_by_condition(items, (void*) _search_by_id);
 }
 
-void MoverPersonaje(t_list* items, char id, int x, int y) {
+void mover_personaje(t_list* items, char id, int x, int y) {
 	ITEM_NIVEL* item = _search_item_by_id(items, id);
 
 	if (item != NULL) {
@@ -50,11 +50,11 @@ void MoverPersonaje(t_list* items, char id, int x, int y) {
 	}
 }
 
-void MoverEnemigo(t_list* items, char id, int x, int y) {
-	MoverPersonaje(items, id, x, y);
+void mover_enemigo(t_list* items, char id, int x, int y) {
+	mover_personaje(items, id, x, y);
 }
 
-void restarRecurso(t_list* items, char id) {
+void restar_recurso(t_list* items, char id) {
 	ITEM_NIVEL* item = _search_item_by_id(items, id);
 
 	if (item != NULL) {
@@ -63,7 +63,7 @@ void restarRecurso(t_list* items, char id) {
 		printf("WARN: Item %c no existente\n", id);
 	}
 }
-void sumarRecurso(t_list* items, char id) {
+void sumar_recurso(t_list* items, char id) {
 	ITEM_NIVEL* item = _search_item_by_id(items, id);
 
 	if (item != NULL) {

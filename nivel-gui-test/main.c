@@ -33,15 +33,15 @@ int main(void) {
 	p = cols;
 	q = rows;
 
-	CrearPersonaje(items, '@', p, q);
-	CrearPersonaje(items, '#', x, y);
+	crear_personaje(items, '@', p, q);
+	crear_personaje(items, '#', x, y);
 
-	CrearEnemigo(items, '1', ex1, ey1);
-	CrearEnemigo(items, '2', ex2, ey2);
+	crear_enemigo(items, '1', ex1, ey1);
+	crear_enemigo(items, '2', ex2, ey2);
 
-	CrearCaja(items, 'H', 26, 10, 5); 
-	CrearCaja(items, 'M', 8, 15, 3);
-	CrearCaja(items, 'F', 19, 9, 2);
+	crear_caja(items, 'H', 26, 10, 5); 
+	crear_caja(items, 'M', 8, 15, 3);
+	crear_caja(items, 'F', 19, 9, 2);
 
 	nivel_gui_dibujar(items, "Test Chamber 04");
 
@@ -109,40 +109,40 @@ int main(void) {
 		rnd(&ey1, rows);
 		rnd(&ex2, cols);
 		rnd(&ey2, rows);
-		MoverPersonaje(items, '1', ex1, ey1 );
-		MoverPersonaje(items, '2', ex2, ey2 );
+		mover_personaje(items, '1', ex1, ey1 );
+		mover_personaje(items, '2', ex2, ey2 );
 
-		MoverPersonaje(items, '@', p, q);
-		MoverPersonaje(items, '#', x, y);
+		mover_personaje(items, '@', p, q);
+		mover_personaje(items, '#', x, y);
 
 		if (   ((p == 26) && (q == 10)) || ((x == 26) && (y == 10)) ) {
-			restarRecurso(items, 'H');
+			restar_recurso(items, 'H');
 		}
 
 		if (   ((p == 19) && (q == 9)) || ((x == 19) && (y == 9)) ) {
-			restarRecurso(items, 'F');
+			restar_recurso(items, 'F');
 		}
 
 		if (   ((p == 8) && (q == 15)) || ((x == 8) && (y == 15)) ) {
-			restarRecurso(items, 'M');	
+			restar_recurso(items, 'M');	
 		}
 
 		if((p == x) && (q == y)) {
-			BorrarItem(items, '#'); //si chocan, borramos uno (!)
+			borrar_item(items, '#'); //si chocan, borramos uno (!)
 		}
 
 		nivel_gui_dibujar(items, "Test Chamber 04");
 	}
 
-	BorrarItem(items, '#');
-	BorrarItem(items, '@');
+	borrar_item(items, '#');
+	borrar_item(items, '@');
 
-	BorrarItem(items, '1');
-	BorrarItem(items, '2');
+	borrar_item(items, '1');
+	borrar_item(items, '2');
 
-	BorrarItem(items, 'H');
-	BorrarItem(items, 'M');
-	BorrarItem(items, 'F');
+	borrar_item(items, 'H');
+	borrar_item(items, 'M');
+	borrar_item(items, 'F');
 
 	nivel_gui_terminar();
 

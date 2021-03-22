@@ -5,67 +5,67 @@
 	#include <commons/collections/list.h>
 
 	/*
-	* @NAME: CrearItem
+	* @NAME: crear_item
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void CrearItem(t_list* items, char id, int x, int y, char tipo, int cant);
+	void crear_item(t_list* items, char id, int x, int y, char tipo, int cant);
 
 	/*
-	* @NAME: CrearPersonaje
+	* @NAME: crear_personaje
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void CrearPersonaje(t_list* items, char id, int x , int y);
+	void crear_personaje(t_list* items, char id, int x , int y);
 	
 	/*
-	* @NAME: CrearEnemigo
+	* @NAME: crear_enemigo
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void CrearEnemigo(t_list* items, char id, int x , int y);
+	void crear_enemigo(t_list* items, char id, int x , int y);
 	
 	/*
-	* @NAME: CrearCaja
+	* @NAME: crear_caja
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void CrearCaja(t_list* items, char id, int x , int y, int cant);
+	void crear_caja(t_list* items, char id, int x , int y, int cant);
 
 	/*
-	* @NAME: BorrarItem
+	* @NAME: borrar_item
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void BorrarItem(t_list* items, char id);
+	void borrar_item(t_list* items, char id);
 
 	/*
-	* @NAME: MoverPersonaje
+	* @NAME: mover_personaje
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void MoverPersonaje(t_list* items, char personaje, int x, int y);
+	void mover_personaje(t_list* items, char personaje, int x, int y);
 
 	/*
-	* @NAME: MoverEnemigo
+	* @NAME: mover_enemigo
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void MoverEnemigo(t_list* items, char personaje, int x, int y);
+	void mover_enemigo(t_list* items, char personaje, int x, int y);
 
 	/*
-	* @NAME: restarRecurso
+	* @NAME: restar_recurso
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void restarRecurso(t_list* items, char id);
+	void restar_recurso(t_list* items, char id);
 	
 	/*
-	* @NAME: sumarRecurso
+	* @NAME: sumar_recurso
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void sumarRecurso(t_list* items, char id);
+	void sumar_recurso(t_list* items, char id);
 
 #endif
 
