@@ -15,10 +15,34 @@
 		int quantity;
 	} ITEM_NIVEL;
 
-
-	int nivel_gui_dibujar(t_list* items, char* nombre_nivel);
-	int nivel_gui_terminar(void);
+	/*
+	* @NAME: nivel_gui_inicializar
+	* @DESC: Inicializa el espacio de dibujo
+	*/
 	int nivel_gui_inicializar(void);
+
+	/*
+	* @NAME: nivel_gui_dibujar
+	* @DESC: Dibuja cada entidad en la lista de items
+	* @PARAMS:
+	*       items        - lista de objetos a dibujar
+	*       nombre_nivel - nombre del nivel
+	*/
+	int nivel_gui_dibujar(t_list* items, char* nombre_nivel);
+
+	/*
+	* @NAME: nivel_gui_terminar
+	* @DESC: Termina el nivel de forma prolija
+	*/
+	int nivel_gui_terminar(void);
+
+	/*
+	* @NAME: nivel_gui_get_area_nivel
+	* @DESC: Devuelve el tamanio usable de la pantalla 
+	* @PARAMS:
+	*       filas    - valor de retorno de filas
+	*       columnas - valor de retorno de columnas
+	*/
 	int nivel_gui_get_area_nivel(int * filas, int * columnas);
 
 #endif 

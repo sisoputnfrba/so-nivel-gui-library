@@ -14,16 +14,31 @@ static int inicializado = 0;
 
 // ------ Prototipos de Funciones utilitarias ------------
 
+/*
+ * @NAME: nivel_gui_get_term_size
+ * @DESC: Devuelve el tamanio total de la pantalla
+ * @PARAMS:
+ *      filas    - valor de retorno de filas
+ *      columnas - valor de retorno de columnas
+ */
 void nivel_gui_get_term_size(int * filas, int * columnas);
+
+/*
+ * @NAME: nivel_gui_int_validar_inicializado
+ * @DESC: Informa si se inicializo el nivel corectamente
+ */
 int nivel_gui_int_validar_inicializado(void);
+
+/*
+ * @NAME: nivel_gui_print_perror
+ * @DESC: Imprime un error en el nivel
+ * @PARAMS:
+ *      message - mensaje a imprimir
+ */
 void nivel_gui_print_perror(const char* mensaje);
 
 // ------------------------------------------------------
 
-/*
- * @NAME: nivel_gui_inicializar
- * @DESC: Inicializa el espacio de dibujo
- */
 int nivel_gui_inicializar(void) {
 
 	if (nivel_gui_int_validar_inicializado()) {
@@ -53,13 +68,6 @@ int nivel_gui_inicializar(void) {
 
 }
 
-/*
- * @NAME: nivel_gui_dibujar
- * @DESC: Dibuja cada entidad en la lista de items
- * @PARAMS:
- * 		items	  - lista de objetos a dibujar
- * 		nombre_nivel - nombre del nivel
- */
 int nivel_gui_dibujar(t_list* items, char* nombre_nivel) {
 
 	if (!nivel_gui_int_validar_inicializado()) {
@@ -107,10 +115,6 @@ int nivel_gui_dibujar(t_list* items, char* nombre_nivel) {
 
 }
 
-/*
- * @NAME: nivel_gui_terminar
- * @DESC: Termina el nivel de forma prolija
- */
 int nivel_gui_terminar(void) {
 
 	if (!nivel_gui_int_validar_inicializado()) {
@@ -127,13 +131,6 @@ int nivel_gui_terminar(void) {
 
 }
 
-/*
- * @NAME: nivel_gui_get_area_nivel
- * @DESC: Devuelve el tamanio de la pantalla usable
- * @PARAMS:
- * 		rows - valor de retorno de filas
- * 		cols - valor de retorno de columnas
- */
 int nivel_gui_get_area_nivel(int * rows, int * cols) {
 
 	if (!nivel_gui_int_validar_inicializado()) {
@@ -154,13 +151,8 @@ int nivel_gui_get_area_nivel(int * rows, int * cols) {
 	return EXIT_SUCCESS;
 }
 
-/*
- * @NAME: nivel_gui_get_term_size
- * @DESC: Devuelve el tamanio total de la pantalla
- * @PARAMS:
- * 		rows - valor de retorno de filas
- * 		cols - valor de retorno de columnas
- */
+/*---------------- Funciones utilitarias ----------------*/
+
 void nivel_gui_get_term_size(int * rows, int * cols) {
 
 	struct winsize ws;
@@ -173,20 +165,10 @@ void nivel_gui_get_term_size(int * rows, int * cols) {
 	*cols = ws.ws_col;
 }
 
-/*
- * @NAME: nivel_gui_int_validar_inicializado
- * @DESC: Informa si se inicializo el nivel corectamente
- */
 int nivel_gui_int_validar_inicializado(void) {
 	return inicializado;
 }
 
-/*
- * @NAME: nivel_gui_print_perror
- * @DESC: Imprime un error en el nivel
- * @PARAMS:
- * 		message - mensaje a imprimir
- */
 void nivel_gui_print_perror(const char* message) {
 	fprintf(stderr, "%s\n", message);
 }
