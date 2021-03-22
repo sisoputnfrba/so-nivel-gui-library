@@ -26,10 +26,10 @@ void nivel_gui_print_perror(const char* mensaje);
  */
 int nivel_gui_inicializar(void) {
 
-	if (nivel_gui_int_validar_inicializado()){
-                nivel_gui_print_perror("nivel_gui_inicializar: Library ya inicializada!");
-                return EXIT_FAILURE;
-        }
+	if (nivel_gui_int_validar_inicializado()) {
+		nivel_gui_print_perror("nivel_gui_inicializar: Library ya inicializada!");
+		return EXIT_FAILURE;
+	}
 
 	mainwin = initscr();
 	keypad(stdscr, TRUE);
@@ -62,12 +62,12 @@ int nivel_gui_inicializar(void) {
  */
 int nivel_gui_dibujar(t_list* items, char* nombre_nivel) {
 
-	if (!nivel_gui_int_validar_inicializado()){
+	if (!nivel_gui_int_validar_inicializado()) {
 		nivel_gui_print_perror("nivel_gui_dibujar: Library no inicializada!");
 		return EXIT_FAILURE;
 	}
 
-	if (items == NULL){
+	if (items == NULL) {
 		nivel_gui_print_perror("nivel_gui_dibujar: La lista de items no puede ser NULL");
 		return EXIT_FAILURE;
 	}
@@ -82,25 +82,24 @@ int nivel_gui_dibujar(t_list* items, char* nombre_nivel) {
 	move(rows - 2, 2);
 	printw("Recursos: ");
 
-        
-        void _draw_element(ITEM_NIVEL* item) {
-            wmove(secwin, item->posy, item->posx);
-            if(item->item_type == ENEMIGO_ITEM_TYPE) {
-                    waddch(secwin, '*' | COLOR_PAIR(4));
-            } else if (item->item_type == RECURSO_ITEM_TYPE) {
-                    waddch(secwin, item->id | COLOR_PAIR(3));
-            } else if(item->item_type == PERSONAJE_ITEM_TYPE) {
-                    waddch(secwin, item->id | COLOR_PAIR(2));
-            }
-            if (item->item_type == RECURSO_ITEM_TYPE) {
-                move(rows - 2, 7 * i + 3 + 9);
-                printw("%c: %d - ", item->id, item->quantity);
-                i++;
-            }
-        }
-        
-        list_iterate(items, (void*) _draw_element);
-       
+	void _draw_element(ITEM_NIVEL* item) {
+		wmove(secwin, item->posy, item->posx);
+		if(item->item_type == ENEMIGO_ITEM_TYPE) {
+			waddch(secwin, '*' | COLOR_PAIR(4));
+		} else if (item->item_type == RECURSO_ITEM_TYPE) {
+			waddch(secwin, item->id | COLOR_PAIR(3));
+		} else if(item->item_type == PERSONAJE_ITEM_TYPE) {
+			waddch(secwin, item->id | COLOR_PAIR(2));
+		}
+		if (item->item_type == RECURSO_ITEM_TYPE) {
+			move(rows - 2, 7 * i + 3 + 9);
+			printw("%c: %d - ", item->id, item->quantity);
+			i++;
+		}
+	}
+
+	list_iterate(items, (void*) _draw_element);
+
 	wrefresh(secwin);
 	wrefresh(mainwin);
 
@@ -114,17 +113,17 @@ int nivel_gui_dibujar(t_list* items, char* nombre_nivel) {
  */
 int nivel_gui_terminar(void) {
 
-        if (!nivel_gui_int_validar_inicializado()){
-                nivel_gui_print_perror("nivel_gui_terminar: Library no inicializada!");
-                return EXIT_FAILURE;
-        }
+	if (!nivel_gui_int_validar_inicializado()) {
+		nivel_gui_print_perror("nivel_gui_terminar: Library no inicializada!");
+		return EXIT_FAILURE;
+	}
 
-        delwin(mainwin);
-        delwin(secwin);
-        endwin();
-        refresh();
+	delwin(mainwin);
+	delwin(secwin);
+	endwin();
+	refresh();
 
-        return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 
 }
 
@@ -137,12 +136,12 @@ int nivel_gui_terminar(void) {
  */
 int nivel_gui_get_area_nivel(int * rows, int * cols) {
 
-	if (!nivel_gui_int_validar_inicializado()){
-			nivel_gui_print_perror("nivel_gui_get_area_nivel: Library no inicializada!");
-			return EXIT_FAILURE;
-			}
+	if (!nivel_gui_int_validar_inicializado()) {
+		nivel_gui_print_perror("nivel_gui_get_area_nivel: Library no inicializada!");
+		return EXIT_FAILURE;
+	}
 
-	if (rows == NULL || cols == NULL){
+	if (rows == NULL || cols == NULL) {
 		nivel_gui_print_perror("nivel_gui_get_area_nivel: Ninguno de los argumentos puede ser NULL");
 		return EXIT_FAILURE;
 	}
@@ -164,21 +163,21 @@ int nivel_gui_get_area_nivel(int * rows, int * cols) {
  */
 void nivel_gui_get_term_size(int * rows, int * cols) {
 
-    struct winsize ws;
+	struct winsize ws;
 
-    if ( ioctl(0, TIOCGWINSZ, &ws) < 0 ) {
-        perror("couldn't get window size");
-    }
+	if ( ioctl(0, TIOCGWINSZ, &ws) < 0 ) {
+		perror("couldn't get window size");
+	}
 
-    *rows = ws.ws_row;
-    *cols = ws.ws_col;
+	*rows = ws.ws_row;
+	*cols = ws.ws_col;
 }
 
 /*
  * @NAME: nivel_gui_int_validar_inicializado
  * @DESC: Informa si se inicializo el nivel corectamente
  */
-int nivel_gui_int_validar_inicializado(void){
+int nivel_gui_int_validar_inicializado(void) {
 	return inicializado;
 }
 
@@ -188,7 +187,7 @@ int nivel_gui_int_validar_inicializado(void){
  * @PARAMS:
  * 		message - mensaje a imprimir
  */
-void nivel_gui_print_perror(const char* message){
+void nivel_gui_print_perror(const char* message) {
 	fprintf(stderr, "%s\n", message);
 }
 

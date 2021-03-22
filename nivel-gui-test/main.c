@@ -8,14 +8,14 @@
  * @NAME: rnd
  * @DESC: Modifica el numero en +1,0,-1, sin pasarse del maximo dado
  */
-void rnd(int *x, int max){
+void rnd(int *x, int max) {
 	*x += (rand() % 3) - 1;
 	*x = (*x<max) ? *x : max-1;
 	*x = (*x>0) ? *x : 1;
 }
 
 int main(void) {
-        t_list* items = list_create();
+	t_list* items = list_create();
 
 	int rows, cols;
 	int q, p;
@@ -28,7 +28,7 @@ int main(void) {
 
 	nivel_gui_inicializar();
 
-    nivel_gui_get_area_nivel(&rows, &cols);
+	nivel_gui_get_area_nivel(&rows, &cols);
 
 	p = cols;
 	q = rows;
@@ -104,7 +104,6 @@ int main(void) {
 				exit(0);
 			break;
 		}
-
 
 		rnd(&ex1, cols);
 		rnd(&ey1, rows);
