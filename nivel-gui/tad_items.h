@@ -5,13 +5,6 @@
 	#include <commons/collections/list.h>
 
 	/*
-	* @NAME: crear_item
-	* @DESC: 
-	* @PARAMS:
-	*/
-	void crear_item(t_list* items, char id, int x, int y, char tipo, int cant);
-
-	/*
 	* @NAME: crear_personaje
 	* @DESC: 
 	* @PARAMS:

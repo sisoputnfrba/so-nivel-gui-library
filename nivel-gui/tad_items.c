@@ -5,30 +5,19 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+void _crear_item(t_list* items, char id, int x, int y, char tipo, int cant);
 ITEM_NIVEL* _search_item_by_id(t_list* items, char id);
 
-void crear_item(t_list* items, char id, int x , int y, char tipo, int cant_rec) {
-	ITEM_NIVEL * item = malloc(sizeof(ITEM_NIVEL));
-
-	item->id = id;
-	item->posx=x;
-	item->posy=y;
-	item->item_type = tipo;
-	item->quantity = cant_rec;
-
-	list_add(items, item);
-}
-
 void crear_personaje(t_list* items, char id, int x , int y) {
-	crear_item(items, id, x, y, PERSONAJE_ITEM_TYPE, 0);
+	_crear_item(items, id, x, y, PERSONAJE_ITEM_TYPE, 0);
 }
 
 void crear_enemigo(t_list* items, char id, int x , int y) {
-	crear_item(items, id, x, y, ENEMIGO_ITEM_TYPE, 0);
+	_crear_item(items, id, x, y, ENEMIGO_ITEM_TYPE, 0);
 }
 
 void crear_caja(t_list* items, char id, int x , int y, int cant) {
-	crear_item(items, id, x, y, RECURSO_ITEM_TYPE, cant);
+	_crear_item(items, id, x, y, RECURSO_ITEM_TYPE, cant);
 }
 
 void borrar_item(t_list* items, char id) {
@@ -71,6 +60,18 @@ void sumar_recurso(t_list* items, char id) {
 	} else {
 		printf("WARN: Item %c no existente\n", id);
 	}
+}
+
+void _crear_item(t_list* items, char id, int x , int y, char tipo, int cant_rec) {
+	ITEM_NIVEL * item = malloc(sizeof(ITEM_NIVEL));
+
+	item->id = id;
+	item->posx=x;
+	item->posy=y;
+	item->item_type = tipo;
+	item->quantity = cant_rec;
+
+	list_add(items, item);
 }
 
 ITEM_NIVEL* _search_item_by_id(t_list* items, char id) {
