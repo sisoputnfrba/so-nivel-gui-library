@@ -5,6 +5,13 @@
 #include <curses.h>
 #include <commons/collections/list.h>
 
+#define ASSERT_CREATE(id, err)                                                          \
+    if(err) {                                                                           \
+        nivel_gui_terminar();                                                           \
+        fprintf(stderr, "Error al crear '%c': %s\n", id, nivel_gui_string_error(err));  \
+        return EXIT_FAILURE;                                                            \
+    }
+
 /*
  * @NAME: rnd
  * @DESC: Retorna un entero en el rango [-1, 1]
@@ -15,66 +22,84 @@ int rnd() {
 
 int main(void) {
 	int cols, rows;
+	int err;
 
 	nivel_gui_inicializar();
 
 	nivel_gui_get_area_nivel(&cols, &rows);
 
-	crear_personaje('@', cols, rows);
-	crear_personaje('#', 1, 1);
+	err = crear_personaje('@', cols, rows);
+	ASSERT_CREATE('@', err);
 
-	crear_enemigo('1', 10, 14);
-	crear_enemigo('2', 20, 3);
+	err = crear_personaje('#', 1, 1);
+	ASSERT_CREATE('#', err);
+	
+	err = crear_enemigo('1', 10, 14);
+	ASSERT_CREATE('1', err);
 
-	crear_caja('H', 26, 10, 5); 
-	crear_caja('M', 8, 15, 3);
-	crear_caja('F', 19, 9, 2);
+	err = crear_enemigo('2', 20, 3);
+	ASSERT_CREATE('2', err);
 
-	nivel_gui_dibujar("Test Chamber 04");
+	err = crear_caja('H', 26, 10, 5); 
+	ASSERT_CREATE('H', err);
+
+	err = crear_caja('M', 8, 15, 3);
+	ASSERT_CREATE('M', err);
+	
+	err = crear_caja('F', 19, 9, 2);
+	ASSERT_CREATE('F', err);
 
 	while ( 1 ) {
+		nivel_gui_dibujar("Test Chamber 04");
+
 		int key = getch();
 
 		switch( key ) {
 
 			case KEY_UP:
-				desplazar_item('#', 0, -1);
+				err = desplazar_item('#', 0, -1);
 			break;
 
 			case KEY_DOWN:
-				desplazar_item('#', 0, 1);
+				err = desplazar_item('#', 0, 1);
 			break;
 
 			case KEY_LEFT:
-				desplazar_item('#', -1, 0);
+				err = desplazar_item('#', -1, 0);
 			break;
 			case KEY_RIGHT:
-				desplazar_item('#', 1, 0);
+				err = desplazar_item('#', 1, 0);
 			break;
 
 			case 'w':
 			case 'W':
-				desplazar_item('@', 0, -1);
+				err = desplazar_item('@', 0, -1);
 			break;
 
 			case 's':
 			case 'S':
-				desplazar_item('@', 0, 1);
+				err = desplazar_item('@', 0, 1);
 			break;
 
 			case 'a':
 			case 'A':
-				desplazar_item('@', -1, 0);
+				err = desplazar_item('@', -1, 0);
 			break;
+
 			case 'D':
 			case 'd':
-				desplazar_item('@', 1, 0);
+				err = desplazar_item('@', 1, 0);
 			break;
+			
 			case 'Q':
 			case 'q':
-				nivel_gui_terminar();
+				err = nivel_gui_terminar();
 				exit(0);
 			break;
+		}
+
+		if(err) {
+			printf("WARN: %s\n", nivel_gui_string_error(err));
 		}
 
 		desplazar_item('1', rnd(), rnd());
@@ -95,8 +120,6 @@ int main(void) {
 		if(items_chocan('#', '@')) {
 			borrar_item('#');
 		}
-
-		nivel_gui_dibujar("Test Chamber 04");
 	}
 
 	nivel_gui_terminar();

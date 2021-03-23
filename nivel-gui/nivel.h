@@ -5,6 +5,17 @@
 	#define RECURSO_ITEM_TYPE 1
 	#define ENEMIGO_ITEM_TYPE 2
 
+	#define NGUI_SUCCESS                0
+	#define NGUI_ITEM_NOT_FOUND        -1
+	#define NGUI_ITEM_ALREADY_EXISTS   -2
+	#define NGUI_NOT_RECURSO_ITEM      -3
+	#define NGUI_ITEM_INVALID_POSITION -4
+	#define NGUI_ITEM_INVALID_CANT     -5
+	#define NGUI_EMPTY_RECURSO         -6
+	#define NGUI_NO_INIT               -7
+	#define NGUI_ALREADY_INIT          -8
+	#define NGUI_WINDOW_SIZE_ERR       -9
+
 	#include <commons/collections/list.h>
 
 	typedef struct item {
@@ -44,5 +55,13 @@
 	*       filas    - valor de retorno de filas
 	*/
 	int nivel_gui_get_area_nivel(int * columnas, int * filas);
+
+	/*
+	* @NAME: nivel_gui_string_error
+	* @DESC: Devuelve un string según el código de error recibido
+	* @PARAMS:
+	*     errnum - código de error
+	*/
+	char* nivel_gui_string_error(int errnum);
 
 #endif 

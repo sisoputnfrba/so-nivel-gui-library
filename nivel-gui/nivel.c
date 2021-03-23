@@ -5,7 +5,6 @@
 
 #include "nivel.h"
 
-
 static WINDOW * secwin;
 static WINDOW * mainwin;
 static int rows, cols;
@@ -30,21 +29,12 @@ void nivel_gui_get_term_size(int * filas, int * columnas);
  */
 int nivel_gui_int_validar_inicializado(void);
 
-/*
- * @NAME: nivel_gui_print_perror
- * @DESC: Imprime un error en el nivel
- * @PARAMS:
- *      message - mensaje a imprimir
- */
-void nivel_gui_print_perror(const char* mensaje);
-
 // ------------------------------------------------------
 
 int nivel_gui_inicializar(void) {
 
 	if (nivel_gui_int_validar_inicializado()) {
-		nivel_gui_print_perror("nivel_gui_inicializar: Library ya inicializada!");
-		return EXIT_FAILURE;
+		return NGUI_ALREADY_INIT;
 	}
 
 	mainwin = initscr();
@@ -67,15 +57,14 @@ int nivel_gui_inicializar(void) {
 
 	inicializado = 1;
 
-	return EXIT_SUCCESS;
+	return NGUI_SUCCESS;
 
 }
 
 int nivel_gui_dibujar(char* nombre_nivel) {
 
 	if (!nivel_gui_int_validar_inicializado()) {
-		nivel_gui_print_perror("nivel_gui_dibujar: Library no inicializada!");
-		return EXIT_FAILURE;
+		return NGUI_NO_INIT;
 	}
 
 	int i = 0;
@@ -109,7 +98,7 @@ int nivel_gui_dibujar(char* nombre_nivel) {
 	wrefresh(secwin);
 	wrefresh(mainwin);
 
-	return EXIT_SUCCESS;
+	return NGUI_SUCCESS;
 
 }
 
@@ -117,8 +106,7 @@ int nivel_gui_terminar(void) {
 	list_destroy_and_destroy_elements(NIVEL_GUI_ITEMS, (void*) free);
 
 	if (!nivel_gui_int_validar_inicializado()) {
-		nivel_gui_print_perror("nivel_gui_terminar: Library no inicializada!");
-		return EXIT_FAILURE;
+		return NGUI_NO_INIT;
 	}
 
 	delwin(mainwin);
@@ -126,28 +114,46 @@ int nivel_gui_terminar(void) {
 	endwin();
 	refresh();
 
-	return EXIT_SUCCESS;
+	return NGUI_SUCCESS;
 
 }
 
 int nivel_gui_get_area_nivel(int * cols, int * rows) {
 
 	if (!nivel_gui_int_validar_inicializado()) {
-		nivel_gui_print_perror("nivel_gui_get_area_nivel: Library no inicializada!");
-		return EXIT_FAILURE;
+		return NGUI_NO_INIT;
 	}
-
-	if (rows == NULL || cols == NULL) {
-		nivel_gui_print_perror("nivel_gui_get_area_nivel: Ninguno de los argumentos puede ser NULL");
-		return EXIT_FAILURE;
-	}
-
 
 	nivel_gui_get_term_size(rows, cols);
-	*rows = *rows - 5;
-	*cols = *cols - 2;
+	if(rows) *rows = *rows - 5;
+	if(cols) *cols = *cols - 2;
 
 	return EXIT_SUCCESS;
+}
+
+char* nivel_gui_string_error(int errnum) {
+	switch ( errnum ) {
+		case NGUI_SUCCESS:
+			return "Exito.";
+		case NGUI_ITEM_NOT_FOUND: 
+			return "No se encontro el item.";
+		case NGUI_ITEM_ALREADY_EXISTS: 
+			return "El item ya existe.";
+		case NGUI_NOT_RECURSO_ITEM: 
+			return "El item no es un recurso.";
+		case NGUI_ITEM_INVALID_POSITION: 
+			return "La posicion se encuentra fuera del tablero.";
+		case NGUI_ITEM_INVALID_CANT: 
+			return "La cantidad de elementos recibida no es valida.";
+		case NGUI_EMPTY_RECURSO: 
+			return "El recurso se encuentra vacio.";
+		case NGUI_NO_INIT:
+			return "Library no inicializada.";
+		case NGUI_ALREADY_INIT:
+			return "Library ya inicializada.";
+		default:
+			return "Desconocido.";
+	}
 }
 
 /*---------------- Funciones utilitarias ----------------*/
@@ -158,19 +164,13 @@ void nivel_gui_get_term_size(int * rows, int * cols) {
 
 	if ( ioctl(0, TIOCGWINSZ, &ws) < 0 ) {
 		perror("couldn't get window size");
+		return;
 	}
 
-	*rows = ws.ws_row;
-	*cols = ws.ws_col;
+	if(rows) *rows = ws.ws_row;
+	if(cols) *cols = ws.ws_col;
 }
 
 int nivel_gui_int_validar_inicializado(void) {
 	return inicializado;
 }
-
-void nivel_gui_print_perror(const char* message) {
-	fprintf(stderr, "%s\n", message);
-}
-
-
-

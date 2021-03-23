@@ -14,7 +14,7 @@
 	*     x  - posición inicial en x
 	*     y  - posición inicial en y
 	*/
-	void crear_personaje(char id, int x , int y);
+	int crear_personaje(char id, int x , int y);
 	
 	/*
 	* @NAME: crear_enemigo
@@ -26,7 +26,7 @@
 	*     x  - posición inicial en x
 	*     y  - posición inicial en y
 	*/
-	void crear_enemigo(char id, int x , int y);
+	int crear_enemigo(char id, int x , int y);
 	
 	/*
 	* @NAME: crear_caja
@@ -40,7 +40,7 @@
 	*     y    - posición inicial en y
 	*     cant - cantidad inicial de recursos contenidos en la caja
 	*/
-	void crear_caja(char id, int x , int y, int cant);
+	int crear_caja(char id, int x , int y, int cant);
 
 	/*
 	* @NAME: borrar_item
@@ -48,7 +48,7 @@
 	* @PARAMS:
 	*     id - identificador único de acceso
 	*/
-	void borrar_item(char id);
+	int borrar_item(char id);
 
 	/*
 	* @NAME: mover_item
@@ -59,7 +59,7 @@
 	*     x  - nueva posición en x
 	*     y  - nueva posición en y
 	*/
-	void mover_item(char id, int x, int y);
+	int mover_item(char id, int x, int y);
 
 	/*
 	* @NAME: desplazar_item
@@ -71,7 +71,7 @@
 	*     x  - desplazamiento en x
 	*     y  - desplazamiento en y
 	*/
-	void desplazar_item(char id, int x, int y);
+	int desplazar_item(char id, int x, int y);
 
 	/*
 	* @NAME: restar_recurso
@@ -80,7 +80,7 @@
 	* @PARAMS:
 	*     id - identificador único de acceso
 	*/
-	void restar_recurso(char id);
+	int restar_recurso(char id);
 	
 	/*
 	* @NAME: sumar_recurso
@@ -88,7 +88,7 @@
 	* @PARAMS:
 	*     id - identificador único de acceso
 	*/
-	void sumar_recurso(char id);
+	int sumar_recurso(char id);
 
 	/*
 	* @NAME: items_chocan
