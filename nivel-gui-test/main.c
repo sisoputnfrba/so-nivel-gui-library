@@ -1,5 +1,6 @@
 
-#include <tad_items.h>
+#include <nivel-gui/nivel.h>
+#include <nivel-gui/tad_items.h>
 
 #include <stdlib.h>
 #include <curses.h>
