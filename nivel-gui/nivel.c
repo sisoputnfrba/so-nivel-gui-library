@@ -84,7 +84,7 @@ int nivel_gui_dibujar(char* nombre_nivel) {
 	wbkgd(secwin, COLOR_PAIR(1));
 
 	move(rows - 3, 2);
-	printw("Nivel: %s", nombre_nivel);
+	printw("Nivel: %s - Tamanio: %dx%d", nombre_nivel, cols - 2, rows - 5);
 	move(rows - 2, 2);
 	printw("Recursos: ");
 
