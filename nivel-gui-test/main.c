@@ -4,9 +4,10 @@
 #include <stdlib.h>
 #include <curses.h>
 #include <commons/collections/list.h>
+
 /*
  * @NAME: rnd
- * @DESC: Modifica el numero en +1,0,-1, sin pasarse del maximo dado
+ * @DESC: Retorna un entero en el rango [-1, 1]
  */
 int rnd() {
 	return (rand() % 3) - 1;
@@ -17,7 +18,7 @@ int main(void) {
 
 	nivel_gui_inicializar();
 
-	nivel_gui_get_area_nivel(&rows, &cols);
+	nivel_gui_get_area_nivel(&cols, &rows);
 
 	crear_personaje('@', cols, rows);
 	crear_personaje('#', 1, 1);

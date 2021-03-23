@@ -40,9 +40,9 @@
 	* @NAME: nivel_gui_get_area_nivel
 	* @DESC: Devuelve el tamanio usable de la pantalla 
 	* @PARAMS:
-	*       filas    - valor de retorno de filas
 	*       columnas - valor de retorno de columnas
+	*       filas    - valor de retorno de filas
 	*/
-	int nivel_gui_get_area_nivel(int * filas, int * columnas);
+	int nivel_gui_get_area_nivel(int * columnas, int * filas);
 
 #endif 

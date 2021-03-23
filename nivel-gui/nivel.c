@@ -130,7 +130,7 @@ int nivel_gui_terminar(void) {
 
 }
 
-int nivel_gui_get_area_nivel(int * rows, int * cols) {
+int nivel_gui_get_area_nivel(int * cols, int * rows) {
 
 	if (!nivel_gui_int_validar_inicializado()) {
 		nivel_gui_print_perror("nivel_gui_get_area_nivel: Library no inicializada!");

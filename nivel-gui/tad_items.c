@@ -114,10 +114,10 @@ bool _validar_posicion(int x, int y) {
 		return false;
 	}
 
-	int filas, columnas;
-	nivel_gui_get_area_nivel(&filas, &columnas);
+	int columnas, filas;
+	nivel_gui_get_area_nivel(&columnas, &filas);
 
-	if(y > filas || x > columnas) {
+	if(x > columnas || y > filas) {
 		return false;
 	}
 
