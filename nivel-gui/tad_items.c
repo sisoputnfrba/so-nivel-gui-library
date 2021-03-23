@@ -62,6 +62,7 @@ void restar_recurso(char id) {
 		printf("WARN: Item %c no existente\n", id);
 	}
 }
+
 void sumar_recurso(char id) {
 	ITEM_NIVEL* item = _search_item_by_id(id);
 
@@ -83,8 +84,20 @@ bool items_chocan(char id1, char id2) {
 }
 
 void _crear_item(char id, int x , int y, char tipo, int cant_rec) {
-	ITEM_NIVEL * item = malloc(sizeof(ITEM_NIVEL));
+	if(!_validar_posicion(x, y)) {
+		nivel_gui_terminar();
+		fprintf(stderr, "ERR: Posicion no valida: x=%d y=%d.\n", x, y);
+		exit(EXIT_FAILURE);
+	}
 
+	ITEM_NIVEL* item = _search_item_by_id(id);
+	if (item != NULL) {
+		nivel_gui_terminar();
+		fprintf(stderr, "ERR: Item '%c' ya existente.", id);
+		exit(EXIT_FAILURE);
+	}
+
+	item = malloc(sizeof(ITEM_NIVEL));
 	item->id = id;
 	item->posx=x;
 	item->posy=y;
