@@ -9,6 +9,8 @@ extern t_list* NIVEL_GUI_ITEMS;
 
 void _crear_item(char id, int x, int y, char tipo, int cant);
 ITEM_NIVEL* _search_item_by_id(char id);
+void _cambiar_posicion(ITEM_NIVEL* item, int x, int y);
+bool _validar_posicion(int x, int y);
 
 void crear_personaje(char id, int x , int y) {
 	_crear_item(id, x, y, PERSONAJE_ITEM_TYPE, 0);
@@ -29,19 +31,26 @@ void borrar_item(char id) {
 	list_remove_and_destroy_by_condition(NIVEL_GUI_ITEMS, (void*) _search_by_id, (void*) free);
 }
 
-void mover_personaje(char id, int x, int y) {
+void mover_item(char id, int x, int y) {
 	ITEM_NIVEL* item = _search_item_by_id(id);
 
-	if (item != NULL) {
-		item->posx = x;
-		item->posy = y;
-	} else {
+	if (item == NULL) {
 		printf("WARN: Item %c no existente\n", id);
+		return;
 	}
+
+	_cambiar_posicion(item, x, y);
 }
 
-void mover_enemigo(char id, int x, int y) {
-	mover_personaje(id, x, y);
+void desplazar_item(char id, int x, int y) {
+	ITEM_NIVEL* item = _search_item_by_id(id);
+
+	if (item == NULL) {
+		printf("WARN: Item %c no existente\n", id);
+		return;
+	}
+
+	_cambiar_posicion(item, item->posx + x, item->posy + y);
 }
 
 void restar_recurso(char id) {
@@ -63,6 +72,16 @@ void sumar_recurso(char id) {
 	}
 }
 
+bool items_chocan(char id1, char id2) {
+	ITEM_NIVEL* item1 = _search_item_by_id(id1);
+	ITEM_NIVEL* item2 = _search_item_by_id(id2);
+	if(item1 == NULL || item2 == NULL) {
+		return false;
+	} else {
+		return (item1->posx == item2->posx) && (item1->posy == item2->posy);
+	}
+}
+
 void _crear_item(char id, int x , int y, char tipo, int cant_rec) {
 	ITEM_NIVEL * item = malloc(sizeof(ITEM_NIVEL));
 
@@ -81,4 +100,26 @@ ITEM_NIVEL* _search_item_by_id(char id) {
 	}
 
 	return list_find(NIVEL_GUI_ITEMS, (void*) _search_by_id);
+}
+
+void _cambiar_posicion(ITEM_NIVEL* item, int x, int y) {
+	if (_validar_posicion(x, y)) {
+		item->posx = x;
+		item->posy = y;
+	}
+}
+
+bool _validar_posicion(int x, int y) {
+	if(x < 1 || y < 1) {
+		return false;
+	}
+
+	int filas, columnas;
+	nivel_gui_get_area_nivel(&filas, &columnas);
+
+	if(y > filas || x > columnas) {
+		return false;
+	}
+
+	return true;
 }

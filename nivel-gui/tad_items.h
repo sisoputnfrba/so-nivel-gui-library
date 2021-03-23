@@ -33,18 +33,18 @@
 	void borrar_item(char id);
 
 	/*
-	* @NAME: mover_personaje
+	* @NAME: mover_item
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void mover_personaje(char personaje, int x, int y);
+	void mover_item(char id, int x, int y);
 
 	/*
-	* @NAME: mover_enemigo
+	* @NAME: desplazar_item
 	* @DESC: 
 	* @PARAMS:
 	*/
-	void mover_enemigo(char personaje, int x, int y);
+	void desplazar_item(char id, int x, int y);
 
 	/*
 	* @NAME: restar_recurso
@@ -59,6 +59,13 @@
 	* @PARAMS:
 	*/
 	void sumar_recurso(char id);
+
+	/*
+	* @NAME: items_chocan
+	* @DESC: 
+	* @PARAMS:
+	*/
+	bool items_chocan(char id1, char id2);
 
 #endif
 
