@@ -29,10 +29,10 @@ int main(void) {
 
 	nivel_gui_get_area_nivel(&cols, &rows);
 
-	err = crear_personaje('@', cols, rows);
+	err = crear_personaje('@', cols - 1, rows - 1);
 	ASSERT_CREATE('@', err);
 
-	err = crear_personaje('#', 1, 1);
+	err = crear_personaje('#', 0, 0);
 	ASSERT_CREATE('#', err);
 	
 	err = crear_enemigo('1', 10, 14);

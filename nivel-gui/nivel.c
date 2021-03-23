@@ -5,6 +5,8 @@
 
 #include "nivel.h"
 
+#define NIVEL_GUI_BORDER_SIZE 1
+
 static WINDOW * secwin;
 static WINDOW * mainwin;
 static int rows, cols;
@@ -78,7 +80,7 @@ int nivel_gui_dibujar(char* nombre_nivel) {
 	printw("Recursos: ");
 
 	void _draw_element(ITEM_NIVEL* item) {
-		wmove(secwin, item->posy, item->posx);
+		wmove(secwin, item->posy + NIVEL_GUI_BORDER_SIZE, item->posx + NIVEL_GUI_BORDER_SIZE);
 		if(item->item_type == ENEMIGO_ITEM_TYPE) {
 			waddch(secwin, '*' | COLOR_PAIR(4));
 		} else if (item->item_type == RECURSO_ITEM_TYPE) {

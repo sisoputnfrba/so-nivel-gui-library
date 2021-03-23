@@ -147,14 +147,14 @@ int _cambiar_posicion(ITEM_NIVEL* item, int x, int y) {
 }
 
 bool _validar_posicion(int x, int y) {
-	if(x < 1 || y < 1) {
+	if(x < 0 || y < 0) {
 		return false;
 	}
 
 	int columnas, filas;
 	nivel_gui_get_area_nivel(&columnas, &filas);
 
-	if(x > columnas || y > filas) {
+	if(x >= columnas || y >= filas) {
 		return false;
 	}
 
