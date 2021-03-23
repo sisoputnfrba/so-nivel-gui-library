@@ -56,21 +56,33 @@ void desplazar_item(char id, int x, int y) {
 void restar_recurso(char id) {
 	ITEM_NIVEL* item = _search_item_by_id(id);
 
-	if (item != NULL) {
-		item->quantity = item->quantity > 0 ? item->quantity - 1 : 0;
-	} else {
+	if (item == NULL) {
 		printf("WARN: Item %c no existente\n", id);
+		return;
 	}
+
+	if(item->item_type != RECURSO_ITEM_TYPE) {
+		printf("WARN: Item %c no es un recurso\n", id);
+		return;
+	}
+
+	item->quantity = item->quantity > 0 ? item->quantity - 1 : 0;
 }
 
 void sumar_recurso(char id) {
 	ITEM_NIVEL* item = _search_item_by_id(id);
 
-	if (item != NULL) {
-		item->quantity++;
-	} else {
+	if (item == NULL) {
 		printf("WARN: Item %c no existente\n", id);
+		return;
 	}
+
+	if(item->item_type != RECURSO_ITEM_TYPE) {
+		printf("WARN: Item %c no es un recurso\n", id);
+		return;
+	}
+
+	item->quantity++;
 }
 
 bool items_chocan(char id1, char id2) {
