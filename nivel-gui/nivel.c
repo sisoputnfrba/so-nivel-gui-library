@@ -5,8 +5,6 @@
 
 #include "nivel.h"
 
-#define NIVEL_GUI_BORDER_SIZE 1
-
 static WINDOW * secwin;
 static WINDOW * mainwin;
 static int rows, cols;
@@ -29,6 +27,13 @@ void nivel_gui_get_term_size(int * filas, int * columnas);
  */
 int nivel_gui_int_validar_inicializado(void);
 
+/*
+ * @NAME: nivel_gui_item_show
+ * @DESC: Devuelve el caracter a mostrarse en pantalla 
+ * segun el item
+ */
+char nivel_gui_item_show(ITEM_NIVEL* item);
+
 // ------------------------------------------------------
 
 int nivel_gui_inicializar(void) {
@@ -41,10 +46,10 @@ int nivel_gui_inicializar(void) {
 	keypad(stdscr, TRUE);
 	noecho();
 	start_color();
-	init_pair(1,COLOR_GREEN, COLOR_BLACK);
-	init_pair(2,COLOR_WHITE, COLOR_BLACK);
-	init_pair(3,COLOR_BLACK, COLOR_YELLOW);
-	init_pair(4,COLOR_BLACK, COLOR_BLUE);
+	init_pair(1                  , COLOR_GREEN, COLOR_BLACK);
+	init_pair(PERSONAJE_ITEM_TYPE, COLOR_WHITE, COLOR_BLACK);
+	init_pair(CAJA_ITEM_TYPE     , COLOR_BLACK, COLOR_YELLOW);
+	init_pair(ENEMIGO_ITEM_TYPE  , COLOR_BLACK, COLOR_BLUE);
 	box(stdscr, 0, 0);
 	refresh();
 
@@ -65,36 +70,31 @@ int nivel_gui_dibujar(NIVEL* nivel) {
 		return NGUI_NO_INIT;
 	}
 
-	int i = 0;
+	char* srcs_text = string_duplicate("Recursos: ");
+
 	werase(secwin);
 	box(secwin, 0, 0);
 	wbkgd(secwin, COLOR_PAIR(1));
 
-	move(rows - 3, 2);
-	printw("Nivel: %s - Tamanio: %dx%d", nivel->nombre, cols - 2, rows - 5);
-	move(rows - 2, 2);
-	printw("Recursos: ");
-
 	void _draw_element(ITEM_NIVEL* item) {
-		wmove(secwin, item->posy + NIVEL_GUI_BORDER_SIZE, item->posx + NIVEL_GUI_BORDER_SIZE);
-		if(item->item_type == ENEMIGO_ITEM_TYPE) {
-			waddch(secwin, '*' | COLOR_PAIR(4));
-		} else if (item->item_type == CAJA_ITEM_TYPE) {
-			waddch(secwin, item->id | COLOR_PAIR(3));
-		} else if(item->item_type == PERSONAJE_ITEM_TYPE) {
-			waddch(secwin, item->id | COLOR_PAIR(2));
-		}
+		wmove(secwin, item->posy + 1, item->posx + 1);
+		waddch(secwin, nivel_gui_item_show(item) | COLOR_PAIR(item->item_type));
 		if (item->item_type == CAJA_ITEM_TYPE) {
-			move(rows - 2, 7 * i + 3 + 9);
-			printw("%c: %d - ", item->id, item->quantity);
-			i++;
+			string_append_with_format(&srcs_text, "%c: %d - ", item->id, item->quantity);
 		}
 	}
 
 	list_iterate(nivel->items, (void*) _draw_element);
 
+	move(rows - 3, 2);
+	printw("Nivel: %s - Tamanio: %dx%d", nivel->nombre, cols - 2, rows - 5);
+	move(rows - 2, 2);
+	printw(srcs_text);
+
 	wrefresh(secwin);
 	wrefresh(mainwin);
+
+	free(srcs_text);
 
 	return NGUI_SUCCESS;
 
@@ -170,4 +170,8 @@ void nivel_gui_get_term_size(int * rows, int * cols) {
 
 int nivel_gui_int_validar_inicializado(void) {
 	return inicializado;
+}
+
+char nivel_gui_item_show(ITEM_NIVEL* item) {
+	return item->item_type == ENEMIGO_ITEM_TYPE ? '*' : item->id;
 }

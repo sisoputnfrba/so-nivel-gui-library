@@ -1,9 +1,9 @@
 #ifndef __NIVEL_H__
 #define __NIVEL_H__
 
-	#define PERSONAJE_ITEM_TYPE 0
-	#define CAJA_ITEM_TYPE 1
-	#define ENEMIGO_ITEM_TYPE 2
+	#define PERSONAJE_ITEM_TYPE 2
+	#define CAJA_ITEM_TYPE      3
+	#define ENEMIGO_ITEM_TYPE   4
 
 	#define NGUI_SUCCESS                0
 	#define NGUI_ITEM_NOT_FOUND        -1
@@ -17,6 +17,7 @@
 	#define NGUI_WINDOW_SIZE_ERR       -9
 
 	#include <commons/collections/list.h>
+	#include <commons/string.h>
 
 	typedef struct nivel {
 		char* nombre;
@@ -27,7 +28,7 @@
 		char id;
 		int posx;
 		int posy;
-		char item_type; // PERSONAJE, ENEMIGO o CAJA
+		int item_type; // PERSONAJE, ENEMIGO o CAJA
 		int quantity;
 	} ITEM_NIVEL;
 

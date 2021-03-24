@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-int _crear_item(NIVEL* nivel, char id, int x, int y, char tipo, int cant);
+int _crear_item(NIVEL* nivel, char id, int x, int y, int tipo, int cant);
 ITEM_NIVEL* _search_item_by_id(NIVEL* nivel, char id);
 int _cambiar_posicion(ITEM_NIVEL* item, int x, int y);
 bool _validar_posicion(int x, int y);
@@ -118,7 +118,7 @@ bool items_chocan(NIVEL* nivel, char id1, char id2) {
 	}
 }
 
-int _crear_item(NIVEL* nivel, char id, int x , int y, char tipo, int cant_rec) {
+int _crear_item(NIVEL* nivel, char id, int x , int y, int tipo, int cant_rec) {
 	if(!_validar_posicion(x, y)) {
 		return NGUI_ITEM_INVALID_POSITION;
 	}
