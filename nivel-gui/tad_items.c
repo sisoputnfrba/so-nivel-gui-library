@@ -5,42 +5,55 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-extern t_list* NIVEL_GUI_ITEMS;
-
-int _crear_item(char id, int x, int y, char tipo, int cant);
-ITEM_NIVEL* _search_item_by_id(char id);
+int _crear_item(NIVEL* nivel, char id, int x, int y, char tipo, int cant);
+ITEM_NIVEL* _search_item_by_id(NIVEL* nivel, char id);
 int _cambiar_posicion(ITEM_NIVEL* item, int x, int y);
 bool _validar_posicion(int x, int y);
 
-int crear_personaje(char id, int x , int y) {
-	return _crear_item(id, x, y, PERSONAJE_ITEM_TYPE, 0);
+NIVEL* nivel_crear(char* nombre) {
+	NIVEL* nivel = malloc(sizeof(NIVEL));
+	
+	nivel->nombre = string_duplicate(nombre);
+	nivel->items = list_create();
+
+	return nivel;
 }
 
-int crear_enemigo(char id, int x , int y) {
-	return _crear_item(id, x, y, ENEMIGO_ITEM_TYPE, 0);
+void nivel_destruir(NIVEL* nivel) {
+	list_destroy_and_destroy_elements(nivel->items, (void*) free);
+	free(nivel->nombre);
+	free(nivel);
 }
 
-int crear_caja(char id, int x , int y, int cant) {
+int crear_personaje(NIVEL* nivel, char id, int x , int y) {
+	return _crear_item(nivel, id, x, y, PERSONAJE_ITEM_TYPE, 0);
+}
+
+int crear_enemigo(NIVEL* nivel, char id, int x , int y) {
+	return _crear_item(nivel, id, x, y, ENEMIGO_ITEM_TYPE, 0);
+}
+
+int crear_caja(NIVEL* nivel, char id, int x , int y, int cant) {
 	if(cant < 0) {
 		return NGUI_ITEM_INVALID_CANT;
 	}
 
-	return _crear_item(id, x, y, RECURSO_ITEM_TYPE, cant);
+	return _crear_item(nivel, id, x, y, RECURSO_ITEM_TYPE, cant);
 }
 
-int borrar_item(char id) {
+int borrar_item(NIVEL* nivel, char id) {
 	bool found = false;
 	bool _search_by_id(ITEM_NIVEL* item) {
 		found = item->id == id;
 		return found;
 	}
-	list_remove_and_destroy_by_condition(NIVEL_GUI_ITEMS, (void*) _search_by_id, (void*) free);
+	list_remove_and_destroy_by_condition(nivel->items, (void*) _search_by_id, (void*) free);
 
 	return found;
 }
 
-int mover_item(char id, int x, int y) {
-	ITEM_NIVEL* item = _search_item_by_id(id);
+int mover_item(NIVEL* nivel, char id, int x, int y) {
+	ITEM_NIVEL* item = _search_item_by_id(nivel, id);
 
 	if (item == NULL) {
 		return NGUI_ITEM_NOT_FOUND;
@@ -49,8 +62,8 @@ int mover_item(char id, int x, int y) {
 	return _cambiar_posicion(item, x, y);
 }
 
-int desplazar_item(char id, int x, int y) {
-	ITEM_NIVEL* item = _search_item_by_id(id);
+int desplazar_item(NIVEL* nivel, char id, int x, int y) {
+	ITEM_NIVEL* item = _search_item_by_id(nivel, id);
 
 	if (item == NULL) {
 		return NGUI_ITEM_NOT_FOUND;
@@ -59,8 +72,8 @@ int desplazar_item(char id, int x, int y) {
 	return _cambiar_posicion(item, item->posx + x, item->posy + y);
 }
 
-int restar_recurso(char id) {
-	ITEM_NIVEL* item = _search_item_by_id(id);
+int restar_recurso(NIVEL* nivel, char id) {
+	ITEM_NIVEL* item = _search_item_by_id(nivel, id);
 
 	if (item == NULL) {
 		return NGUI_ITEM_NOT_FOUND;
@@ -79,8 +92,8 @@ int restar_recurso(char id) {
 	return NGUI_SUCCESS;
 }
 
-int sumar_recurso(char id) {
-	ITEM_NIVEL* item = _search_item_by_id(id);
+int sumar_recurso(NIVEL* nivel, char id) {
+	ITEM_NIVEL* item = _search_item_by_id(nivel, id);
 
 	if (item == NULL) {
 		return NGUI_ITEM_NOT_FOUND;
@@ -95,9 +108,9 @@ int sumar_recurso(char id) {
 	return NGUI_SUCCESS;
 }
 
-bool items_chocan(char id1, char id2) {
-	ITEM_NIVEL* item1 = _search_item_by_id(id1);
-	ITEM_NIVEL* item2 = _search_item_by_id(id2);
+bool items_chocan(NIVEL* nivel, char id1, char id2) {
+	ITEM_NIVEL* item1 = _search_item_by_id(nivel, id1);
+	ITEM_NIVEL* item2 = _search_item_by_id(nivel, id2);
 	if(item1 == NULL || item2 == NULL) {
 		return false;
 	} else {
@@ -105,12 +118,12 @@ bool items_chocan(char id1, char id2) {
 	}
 }
 
-int _crear_item(char id, int x , int y, char tipo, int cant_rec) {
+int _crear_item(NIVEL* nivel, char id, int x , int y, char tipo, int cant_rec) {
 	if(!_validar_posicion(x, y)) {
 		return NGUI_ITEM_INVALID_POSITION;
 	}
 
-	if (_search_item_by_id(id) != NULL) {
+	if (_search_item_by_id(nivel, id) != NULL) {
 		return NGUI_ITEM_ALREADY_EXISTS;
 	}
 
@@ -122,17 +135,17 @@ int _crear_item(char id, int x , int y, char tipo, int cant_rec) {
 	item->item_type = tipo;
 	item->quantity = cant_rec;
 
-	list_add(NIVEL_GUI_ITEMS, item);
+	list_add(nivel->items, item);
 
 	return NGUI_SUCCESS;
 }
 
-ITEM_NIVEL* _search_item_by_id(char id) {
+ITEM_NIVEL* _search_item_by_id(NIVEL* nivel, char id) {
 	bool _search_by_id(ITEM_NIVEL* item) {
 		return item->id == id;
 	}
 
-	return list_find(NIVEL_GUI_ITEMS, (void*) _search_by_id);
+	return list_find(nivel->items, (void*) _search_by_id);
 }
 
 int _cambiar_posicion(ITEM_NIVEL* item, int x, int y) {

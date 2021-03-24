@@ -18,11 +18,16 @@
 
 	#include <commons/collections/list.h>
 
+	typedef struct nivel {
+		char* nombre;
+		t_list* items;
+	} NIVEL;
+
 	typedef struct item {
 		char id;
 		int posx;
 		int posy;
-		char item_type; // PERSONAJE o CAJA_DE_RECURSOS
+		char item_type; // PERSONAJE, ENEMIGO o RECURSO
 		int quantity;
 	} ITEM_NIVEL;
 
@@ -39,7 +44,7 @@
 	*       items        - lista de objetos a dibujar
 	*       nombre_nivel - nombre del nivel
 	*/
-	int nivel_gui_dibujar(char* nombre_nivel);
+	int nivel_gui_dibujar(NIVEL* nivel);
 
 	/*
 	* @NAME: nivel_gui_terminar

@@ -12,8 +12,6 @@ static WINDOW * mainwin;
 static int rows, cols;
 static int inicializado = 0;
 
-t_list* NIVEL_GUI_ITEMS = NULL;
-
 // ------ Prototipos de Funciones utilitarias ------------
 
 /*
@@ -55,15 +53,13 @@ int nivel_gui_inicializar(void) {
 	box(secwin, 0, 0);
 	wrefresh(secwin);
 
-	NIVEL_GUI_ITEMS = list_create();
-
 	inicializado = 1;
 
 	return NGUI_SUCCESS;
 
 }
 
-int nivel_gui_dibujar(char* nombre_nivel) {
+int nivel_gui_dibujar(NIVEL* nivel) {
 
 	if (!nivel_gui_int_validar_inicializado()) {
 		return NGUI_NO_INIT;
@@ -75,7 +71,7 @@ int nivel_gui_dibujar(char* nombre_nivel) {
 	wbkgd(secwin, COLOR_PAIR(1));
 
 	move(rows - 3, 2);
-	printw("Nivel: %s - Tamanio: %dx%d", nombre_nivel, cols - 2, rows - 5);
+	printw("Nivel: %s - Tamanio: %dx%d", nivel->nombre, cols - 2, rows - 5);
 	move(rows - 2, 2);
 	printw("Recursos: ");
 
@@ -95,7 +91,7 @@ int nivel_gui_dibujar(char* nombre_nivel) {
 		}
 	}
 
-	list_iterate(NIVEL_GUI_ITEMS, (void*) _draw_element);
+	list_iterate(nivel->items, (void*) _draw_element);
 
 	wrefresh(secwin);
 	wrefresh(mainwin);
@@ -105,7 +101,6 @@ int nivel_gui_dibujar(char* nombre_nivel) {
 }
 
 int nivel_gui_terminar(void) {
-	list_destroy_and_destroy_elements(NIVEL_GUI_ITEMS, (void*) free);
 
 	if (!nivel_gui_int_validar_inicializado()) {
 		return NGUI_NO_INIT;

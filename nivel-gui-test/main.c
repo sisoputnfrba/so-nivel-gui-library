@@ -6,8 +6,9 @@
 #include <curses.h>
 #include <commons/collections/list.h>
 
-#define ASSERT_CREATE(id, err)                                                          \
+#define ASSERT_CREATE(nivel, id, err)                                                   \
     if(err) {                                                                           \
+        nivel_destruir(nivel);                                                          \
         nivel_gui_terminar();                                                           \
         fprintf(stderr, "Error al crear '%c': %s\n", id, nivel_gui_string_error(err));  \
         return EXIT_FAILURE;                                                            \
@@ -22,6 +23,8 @@ int rnd() {
 }
 
 int main(void) {
+	NIVEL* nivel;
+
 	int cols, rows;
 	int err;
 
@@ -29,73 +32,76 @@ int main(void) {
 
 	nivel_gui_get_area_nivel(&cols, &rows);
 
-	err = crear_personaje('@', cols - 1, rows - 1);
-	ASSERT_CREATE('@', err);
+	nivel = nivel_crear("Test Chamber 04");
 
-	err = crear_personaje('#', 0, 0);
-	ASSERT_CREATE('#', err);
-	
-	err = crear_enemigo('1', 10, 14);
-	ASSERT_CREATE('1', err);
+	err = crear_personaje(nivel, '@', cols - 1, rows - 1);
+	ASSERT_CREATE(nivel, '@', err);
 
-	err = crear_enemigo('2', 20, 3);
-	ASSERT_CREATE('2', err);
+	err = crear_personaje(nivel, '#', 0, 0);
+	ASSERT_CREATE(nivel, '#', err);
 
-	err = crear_caja('H', 26, 10, 5); 
-	ASSERT_CREATE('H', err);
+	err = crear_enemigo(nivel, '1', 10, 14);
+	ASSERT_CREATE(nivel, '1', err);
 
-	err = crear_caja('M', 8, 15, 3);
-	ASSERT_CREATE('M', err);
-	
-	err = crear_caja('F', 19, 9, 2);
-	ASSERT_CREATE('F', err);
+	err = crear_enemigo(nivel, '2', 20, 3);
+	ASSERT_CREATE(nivel, '2', err);
+
+	err = crear_caja(nivel, 'H', 26, 10, 5); 
+	ASSERT_CREATE(nivel, 'H', err);
+
+	err = crear_caja(nivel, 'M', 8, 15, 3);
+	ASSERT_CREATE(nivel, 'M', err);
+
+	err = crear_caja(nivel, 'F', 19, 9, 2);
+	ASSERT_CREATE(nivel, 'F', err);
 
 	while ( 1 ) {
-		nivel_gui_dibujar("Test Chamber 04");
+		nivel_gui_dibujar(nivel);
 
 		int key = getch();
 
 		switch( key ) {
 
 			case KEY_UP:
-				err = desplazar_item('#', 0, -1);
+				err = desplazar_item(nivel, '#', 0, -1);
 			break;
 
 			case KEY_DOWN:
-				err = desplazar_item('#', 0, 1);
+				err = desplazar_item(nivel, '#', 0, 1);
 			break;
 
 			case KEY_LEFT:
-				err = desplazar_item('#', -1, 0);
+				err = desplazar_item(nivel, '#', -1, 0);
 			break;
 			case KEY_RIGHT:
-				err = desplazar_item('#', 1, 0);
+				err = desplazar_item(nivel, '#', 1, 0);
 			break;
 
 			case 'w':
 			case 'W':
-				err = desplazar_item('@', 0, -1);
+				err = desplazar_item(nivel, '@', 0, -1);
 			break;
 
 			case 's':
 			case 'S':
-				err = desplazar_item('@', 0, 1);
+				err = desplazar_item(nivel, '@', 0, 1);
 			break;
 
 			case 'a':
 			case 'A':
-				err = desplazar_item('@', -1, 0);
+				err = desplazar_item(nivel, '@', -1, 0);
 			break;
 
 			case 'D':
 			case 'd':
-				err = desplazar_item('@', 1, 0);
+				err = desplazar_item(nivel, '@', 1, 0);
 			break;
 			
 			case 'Q':
 			case 'q':
-				err = nivel_gui_terminar();
-				exit(0);
+				nivel_destruir(nivel);
+				nivel_gui_terminar();
+				return EXIT_SUCCESS;
 			break;
 		}
 
@@ -103,26 +109,24 @@ int main(void) {
 			printf("WARN: %s\n", nivel_gui_string_error(err));
 		}
 
-		desplazar_item('1', rnd(), rnd());
-		desplazar_item('2', rnd(), rnd());
+		desplazar_item(nivel, '1', rnd(), rnd());
+		desplazar_item(nivel, '2', rnd(), rnd());
 
-		if (items_chocan('H', '@') || items_chocan('H', '#')) {
-			restar_recurso('H');
+		if (items_chocan(nivel, 'H', '@') || items_chocan(nivel, 'H', '#')) {
+			restar_recurso(nivel, 'H');
 		}
 
-		if (items_chocan('F', '@') || items_chocan('F', '#')) {
-			restar_recurso('F');
+		if (items_chocan(nivel, 'F', '@') || items_chocan(nivel, 'F', '#')) {
+			restar_recurso(nivel, 'F');
 		}
 
-		if (items_chocan('M', '@') || items_chocan('M', '#')) {
-			restar_recurso('M');	
+		if (items_chocan(nivel, 'M', '@') || items_chocan(nivel, 'M', '#')) {
+			restar_recurso(nivel, 'M');	
 		}
 
-		if(items_chocan('#', '@')) {
-			borrar_item('#');
+		if(items_chocan(nivel, '#', '@')) {
+			borrar_item(nivel, '#');
 		}
 	}
-
-	nivel_gui_terminar();
 
 }
