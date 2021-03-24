@@ -32,6 +32,7 @@ clean:
 
 install: all
 	cp -u build/$(NIVEL_SO) $(INSTALL_DIR)
+	mkdir -p $(INSTALL_DIR_INCLUDE)
 	cp --parents -u $(H_SRCS) $(INSTALL_DIR_INCLUDE)
 
 uninstall:
