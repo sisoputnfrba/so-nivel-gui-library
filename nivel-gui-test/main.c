@@ -34,25 +34,25 @@ int main(void) {
 
 	nivel = nivel_crear("Test Chamber 04");
 
-	err = crear_personaje(nivel, '@', cols - 1, rows - 1);
+	err = personaje_crear(nivel, '@', cols - 1, rows - 1);
 	ASSERT_CREATE(nivel, '@', err);
 
-	err = crear_personaje(nivel, '#', 0, 0);
+	err = personaje_crear(nivel, '#', 0, 0);
 	ASSERT_CREATE(nivel, '#', err);
 
-	err = crear_enemigo(nivel, '1', 10, 14);
+	err = enemigo_crear(nivel, '1', 10, 14);
 	ASSERT_CREATE(nivel, '1', err);
 
-	err = crear_enemigo(nivel, '2', 20, 3);
+	err = enemigo_crear(nivel, '2', 20, 3);
 	ASSERT_CREATE(nivel, '2', err);
 
-	err = crear_caja(nivel, 'H', 26, 10, 5); 
+	err = caja_crear(nivel, 'H', 26, 10, 5); 
 	ASSERT_CREATE(nivel, 'H', err);
 
-	err = crear_caja(nivel, 'M', 8, 15, 3);
+	err = caja_crear(nivel, 'M', 8, 15, 3);
 	ASSERT_CREATE(nivel, 'M', err);
 
-	err = crear_caja(nivel, 'F', 19, 9, 2);
+	err = caja_crear(nivel, 'F', 19, 9, 2);
 	ASSERT_CREATE(nivel, 'F', err);
 
 	while ( 1 ) {
@@ -63,38 +63,38 @@ int main(void) {
 		switch( key ) {
 
 			case KEY_UP:
-				err = desplazar_item(nivel, '#', 0, -1);
+				err = item_desplazar(nivel, '#', 0, -1);
 			break;
 
 			case KEY_DOWN:
-				err = desplazar_item(nivel, '#', 0, 1);
+				err = item_desplazar(nivel, '#', 0, 1);
 			break;
 
 			case KEY_LEFT:
-				err = desplazar_item(nivel, '#', -1, 0);
+				err = item_desplazar(nivel, '#', -1, 0);
 			break;
 			case KEY_RIGHT:
-				err = desplazar_item(nivel, '#', 1, 0);
+				err = item_desplazar(nivel, '#', 1, 0);
 			break;
 
 			case 'w':
 			case 'W':
-				err = desplazar_item(nivel, '@', 0, -1);
+				err = item_desplazar(nivel, '@', 0, -1);
 			break;
 
 			case 's':
 			case 'S':
-				err = desplazar_item(nivel, '@', 0, 1);
+				err = item_desplazar(nivel, '@', 0, 1);
 			break;
 
 			case 'a':
 			case 'A':
-				err = desplazar_item(nivel, '@', -1, 0);
+				err = item_desplazar(nivel, '@', -1, 0);
 			break;
 
 			case 'D':
 			case 'd':
-				err = desplazar_item(nivel, '@', 1, 0);
+				err = item_desplazar(nivel, '@', 1, 0);
 			break;
 			
 			case 'Q':
@@ -109,23 +109,23 @@ int main(void) {
 			printf("WARN: %s\n", nivel_gui_string_error(err));
 		}
 
-		desplazar_item(nivel, '1', rnd(), rnd());
-		desplazar_item(nivel, '2', rnd(), rnd());
+		item_desplazar(nivel, '1', rnd(), rnd());
+		item_desplazar(nivel, '2', rnd(), rnd());
 
 		if (items_chocan(nivel, 'H', '@') || items_chocan(nivel, 'H', '#')) {
-			restar_recurso(nivel, 'H');
+			caja_quitar_recurso(nivel, 'H');
 		}
 
 		if (items_chocan(nivel, 'F', '@') || items_chocan(nivel, 'F', '#')) {
-			restar_recurso(nivel, 'F');
+			caja_quitar_recurso(nivel, 'F');
 		}
 
 		if (items_chocan(nivel, 'M', '@') || items_chocan(nivel, 'M', '#')) {
-			restar_recurso(nivel, 'M');	
+			caja_quitar_recurso(nivel, 'M');	
 		}
 
 		if(items_chocan(nivel, '#', '@')) {
-			borrar_item(nivel, '#');
+			item_borrar(nivel, '#');
 		}
 	}
 

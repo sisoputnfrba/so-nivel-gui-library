@@ -25,23 +25,23 @@ void nivel_destruir(NIVEL* nivel) {
 	free(nivel);
 }
 
-int crear_personaje(NIVEL* nivel, char id, int x , int y) {
+int personaje_crear(NIVEL* nivel, char id, int x , int y) {
 	return _crear_item(nivel, id, x, y, PERSONAJE_ITEM_TYPE, 0);
 }
 
-int crear_enemigo(NIVEL* nivel, char id, int x , int y) {
+int enemigo_crear(NIVEL* nivel, char id, int x , int y) {
 	return _crear_item(nivel, id, x, y, ENEMIGO_ITEM_TYPE, 0);
 }
 
-int crear_caja(NIVEL* nivel, char id, int x , int y, int cant) {
+int caja_crear(NIVEL* nivel, char id, int x , int y, int cant) {
 	if(cant < 0) {
 		return NGUI_ITEM_INVALID_CANT;
 	}
 
-	return _crear_item(nivel, id, x, y, RECURSO_ITEM_TYPE, cant);
+	return _crear_item(nivel, id, x, y, CAJA_ITEM_TYPE, cant);
 }
 
-int borrar_item(NIVEL* nivel, char id) {
+int item_borrar(NIVEL* nivel, char id) {
 	bool found = false;
 	bool _search_by_id(ITEM_NIVEL* item) {
 		found = item->id == id;
@@ -52,7 +52,7 @@ int borrar_item(NIVEL* nivel, char id) {
 	return found;
 }
 
-int mover_item(NIVEL* nivel, char id, int x, int y) {
+int item_mover(NIVEL* nivel, char id, int x, int y) {
 	ITEM_NIVEL* item = _search_item_by_id(nivel, id);
 
 	if (item == NULL) {
@@ -62,7 +62,7 @@ int mover_item(NIVEL* nivel, char id, int x, int y) {
 	return _cambiar_posicion(item, x, y);
 }
 
-int desplazar_item(NIVEL* nivel, char id, int x, int y) {
+int item_desplazar(NIVEL* nivel, char id, int x, int y) {
 	ITEM_NIVEL* item = _search_item_by_id(nivel, id);
 
 	if (item == NULL) {
@@ -72,14 +72,14 @@ int desplazar_item(NIVEL* nivel, char id, int x, int y) {
 	return _cambiar_posicion(item, item->posx + x, item->posy + y);
 }
 
-int restar_recurso(NIVEL* nivel, char id) {
+int caja_quitar_recurso(NIVEL* nivel, char id) {
 	ITEM_NIVEL* item = _search_item_by_id(nivel, id);
 
 	if (item == NULL) {
 		return NGUI_ITEM_NOT_FOUND;
 	}
 
-	if(item->item_type != RECURSO_ITEM_TYPE) {
+	if(item->item_type != CAJA_ITEM_TYPE) {
 		return NGUI_NOT_RECURSO_ITEM;
 	}
 
@@ -92,14 +92,14 @@ int restar_recurso(NIVEL* nivel, char id) {
 	return NGUI_SUCCESS;
 }
 
-int sumar_recurso(NIVEL* nivel, char id) {
+int caja_agregar_recurso(NIVEL* nivel, char id) {
 	ITEM_NIVEL* item = _search_item_by_id(nivel, id);
 
 	if (item == NULL) {
 		return NGUI_ITEM_NOT_FOUND;
 	}
 
-	if(item->item_type != RECURSO_ITEM_TYPE) {
+	if(item->item_type != CAJA_ITEM_TYPE) {
 		return NGUI_NOT_RECURSO_ITEM;
 	}
 

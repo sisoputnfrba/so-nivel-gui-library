@@ -79,12 +79,12 @@ int nivel_gui_dibujar(NIVEL* nivel) {
 		wmove(secwin, item->posy + NIVEL_GUI_BORDER_SIZE, item->posx + NIVEL_GUI_BORDER_SIZE);
 		if(item->item_type == ENEMIGO_ITEM_TYPE) {
 			waddch(secwin, '*' | COLOR_PAIR(4));
-		} else if (item->item_type == RECURSO_ITEM_TYPE) {
+		} else if (item->item_type == CAJA_ITEM_TYPE) {
 			waddch(secwin, item->id | COLOR_PAIR(3));
 		} else if(item->item_type == PERSONAJE_ITEM_TYPE) {
 			waddch(secwin, item->id | COLOR_PAIR(2));
 		}
-		if (item->item_type == RECURSO_ITEM_TYPE) {
+		if (item->item_type == CAJA_ITEM_TYPE) {
 			move(rows - 2, 7 * i + 3 + 9);
 			printw("%c: %d - ", item->id, item->quantity);
 			i++;

@@ -21,9 +21,9 @@
 	void nivel_destruir(NIVEL* nivel);
 
 	/*
-	* @NAME: crear_personaje
+	* @NAME: personaje_crear
 	* @DESC: Crea una instancia de personaje que se mostrará
-	* en el mapa con el caracter que lo identifica en color 
+	* en el nivel con el caracter que lo identifica en color 
 	* blanco y fondo en negro.
 	* @PARAMS:
 	*     nivel - nivel donde se encontrará el personaje
@@ -31,12 +31,12 @@
 	*     x     - posición inicial en x
 	*     y     - posición inicial en y
 	*/
-	int crear_personaje(NIVEL* nivel, char id, int x , int y);
+	int personaje_crear(NIVEL* nivel, char id, int x , int y);
 	
 	/*
-	* @NAME: crear_enemigo
+	* @NAME: enemigo_crear
 	* @DESC: Crea una instancia de enemigo que se mostrará
-	* en el mapa con el caracter '*' en color negro y fondo
+	* en el nivel con el caracter '*' en color negro y fondo
 	* en azul.
 	* @PARAMS:
 	*     nivel - nivel donde se encontrará el enemigo
@@ -44,12 +44,12 @@
 	*     x     - posición inicial en x
 	*     y     - posición inicial en y
 	*/
-	int crear_enemigo(NIVEL* nivel, char id, int x , int y);
+	int enemigo_crear(NIVEL* nivel, char id, int x , int y);
 	
 	/*
-	* @NAME: crear_caja
+	* @NAME: caja_crear
 	* @DESC: Crea una instancia de caja que se mostrará en
-	* el mapa con el caracter que lo identifica en color negro
+	* el nivel con el caracter que lo identifica en color negro
 	* y fondo en amarillo.
 	* @PARAMS:
 	* @PARAMS:
@@ -57,21 +57,21 @@
 	*     id    - identificador único de acceso del item
 	*     x     - posición inicial en x
 	*     y     - posición inicial en y
-	*     cant  - cantidad inicial de recursos contenidos en la caja
+	*     srcs  - cantidad inicial de recursos contenidos en la caja
 	*/
-	int crear_caja(NIVEL* nivel, char id, int x, int y, int cant);
+	int caja_crear(NIVEL* nivel, char id, int x, int y, int srcs);
 
 	/*
-	* @NAME: borrar_item
+	* @NAME: item_borrar
 	* @DESC: Elimina un item que se encuentre en el nivel.
 	* @PARAMS:
 	*     nivel - nivel donde se encuentra el item
 	*     id    - identificador único de acceso del item
 	*/
-	int borrar_item(NIVEL* nivel, char id);
+	int item_borrar(NIVEL* nivel, char id);
 
 	/*
-	* @NAME: mover_item
+	* @NAME: item_mover
 	* @DESC: Mueve el item a la posición indicada. En caso de 
 	* moverse fuera de la pantalla, no realiza ninguna acción.
 	* @PARAMS:
@@ -80,10 +80,10 @@
 	*     x     - nueva posición en x
 	*     y     - nueva posición en y
 	*/
-	int mover_item(NIVEL* nivel, char id, int x, int y);
+	int item_mover(NIVEL* nivel, char id, int x, int y);
 
 	/*
-	* @NAME: desplazar_item
+	* @NAME: item_desplazar
 	* @DESC: Desplaza el item tomando a su posición actual
 	* como pivote. En caso de desplazarse fuera de la pantalla, 
 	* no realiza ninguna acción.
@@ -93,26 +93,26 @@
 	*     x     - desplazamiento en x
 	*     y     - desplazamiento en y
 	*/
-	int desplazar_item(NIVEL* nivel, char id, int x, int y);
+	int item_desplazar(NIVEL* nivel, char id, int x, int y);
 
 	/*
-	* @NAME: restar_recurso
+	* @NAME: caja_quitar_recurso
 	* @DESC: Quita un recurso de la caja. Si la caja está
 	* vacía, no realiza ninguna acción.
 	* @PARAMS:
 	*     nivel - nivel donde se encuentra el item
 	*     id    - identificador único de acceso del item
 	*/
-	int restar_recurso(NIVEL* nivel, char id);
+	int caja_quitar_recurso(NIVEL* nivel, char id);
 	
 	/*
-	* @NAME: sumar_recurso
+	* @NAME: caja_agregar_recurso
 	* @DESC: Agrega un recurso a la caja.
 	* @PARAMS:
 	*     nivel - nivel donde se encuentra el item
 	*     id    - identificador único de acceso del item
 	*/
-	int sumar_recurso(NIVEL* nivel, char id);
+	int caja_agregar_recurso(NIVEL* nivel, char id);
 
 	/*
 	* @NAME: items_chocan

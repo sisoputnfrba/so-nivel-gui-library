@@ -2,7 +2,7 @@
 #define __NIVEL_H__
 
 	#define PERSONAJE_ITEM_TYPE 0
-	#define RECURSO_ITEM_TYPE 1
+	#define CAJA_ITEM_TYPE 1
 	#define ENEMIGO_ITEM_TYPE 2
 
 	#define NGUI_SUCCESS                0
@@ -27,7 +27,7 @@
 		char id;
 		int posx;
 		int posy;
-		char item_type; // PERSONAJE, ENEMIGO o RECURSO
+		char item_type; // PERSONAJE, ENEMIGO o CAJA
 		int quantity;
 	} ITEM_NIVEL;
 
