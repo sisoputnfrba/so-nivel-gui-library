@@ -1,7 +1,7 @@
 #ifndef __TAD_ITEMS__
 #define __TAD_ITEMS__
 
-	#include "nivel.h"
+	#include "nivel-gui.h"
 	#include <commons/collections/list.h>
 	#include <commons/string.h>
 

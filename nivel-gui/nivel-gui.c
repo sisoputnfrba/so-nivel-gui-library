@@ -3,7 +3,7 @@
 #include <sys/ioctl.h>
 #include <curses.h>
 
-#include "nivel.h"
+#include "nivel-gui.h"
 
 static WINDOW * secwin;
 static WINDOW * mainwin;

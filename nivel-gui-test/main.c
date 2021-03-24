@@ -1,6 +1,6 @@
 
-#include <nivel-gui/nivel.h>
-#include <nivel-gui/tad_items.h>
+#include <nivel-gui/nivel-gui.h>
+#include <nivel-gui/tad_nivel.h>
 
 #include <stdlib.h>
 #include <curses.h>
