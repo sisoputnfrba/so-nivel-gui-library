@@ -10,7 +10,7 @@ debug:
 	-cd nivel-gui && $(MAKE) debug
 	-cd nivel-gui-test && $(MAKE) debug
 
-test: all
+test: debug
 	-cd nivel-gui-test && $(MAKE) test
 
 install: all
@@ -19,7 +19,7 @@ install: all
 uninstall:
 	-cd nivel-gui && sudo $(MAKE) uninstall
 
-valgrind: all
+valgrind: debug
 	-cd nivel-gui-test && $(MAKE) valgrind
 
 .PHONY: all clean debug test install uninstall
