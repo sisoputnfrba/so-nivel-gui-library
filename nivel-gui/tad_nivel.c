@@ -62,14 +62,14 @@ int item_mover(NIVEL* nivel, char id, int x, int y) {
 	return _cambiar_posicion(item, x, y);
 }
 
-int item_desplazar(NIVEL* nivel, char id, int x, int y) {
+int item_desplazar(NIVEL* nivel, char id, int offset_x, int offset_y) {
 	ITEM_NIVEL* item = _search_item_by_id(nivel, id);
 
 	if (item == NULL) {
 		return NGUI_ITEM_NOT_FOUND;
 	}
 
-	return _cambiar_posicion(item, item->posx + x, item->posy + y);
+	return _cambiar_posicion(item, item->posx + offset_x, item->posy + offset_y);
 }
 
 int caja_quitar_recurso(NIVEL* nivel, char id) {

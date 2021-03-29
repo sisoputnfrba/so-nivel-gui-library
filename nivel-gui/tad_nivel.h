@@ -88,12 +88,12 @@
 	* como pivote. En caso de desplazarse fuera de la pantalla, 
 	* no realiza ninguna acción.
 	* @PARAMS:
-	*     nivel - nivel donde se encuentra el item
-	*     id    - identificador único de acceso del item
-	*     x     - desplazamiento en x
-	*     y     - desplazamiento en y
+	*     nivel    - nivel donde se encuentra el item
+	*     id       - identificador único de acceso del item
+	*     offset_x - desplazamiento en x
+	*     offset_y - desplazamiento en y
 	*/
-	int item_desplazar(NIVEL* nivel, char id, int x, int y);
+	int item_desplazar(NIVEL* nivel, char id, int offset_x, int offset_y);
 
 	/*
 	* @NAME: caja_quitar_recurso
