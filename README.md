@@ -1,64 +1,65 @@
+# so-nivel-gui-library
+
 Este repositorio contiene:
 
 - El codigo fuente de la biblioteca para graficar el nivel (libnivel-gui.so)
 - El programa de ejemplo (nivel-gui-test)
 
-Notas:
-* Esta biblioteca depende de la biblioteca commons que se encuentra en:<br/>
-https://github.com/sisoputnfrba/so-commons-library
-* Esta biblioteca requiere tener instalada la biblioteca `ncurses`.  
-Para instalarla, abrir una consola y ejecutar `sudo apt-get install libncurses5-dev`
+## Dependencias
 
-Para usarlo:
+- [so-commons-library](https://github.com/sisoputnfrba/so-commons-library): Para instalarla, seguir los pasos mencionados en el readme del repositorio linkeado.
+- `ncurses`: Para instalarla, abrir una consola y ejecutar `sudo apt-get install libncurses5-dev`
 
--------------------------------
-Build & Run desde Consola
--------------------------------
+## Instalación
 
-1) Bajarlo en un directorio<br>
-2) En el directorio padre compilar ejecutando: `make && make install`<br>
-3) Ir a el directorio testnivel: `cd nivel-gui-test`<br>
-4) Ejecutar el codigo de ejemplo: `./nivel` <br>
-5) Mover un personaje con las flechas y el otro con WASD. Salir con Q<br>
+Para instalar la library se deberán ejecutar los siguientes comandos:
 
--------------------------------
-Build & Run desde Eclipse
--------------------------------
+```
+git clone https://github.com/sisoputnfrba/so-nivel-gui-library/
+cd so-nivel-gui-library
+make install
+```
+
+Para desinstalar, ejecutar `make uninstall`
+
+## Uso
+
+Para usarlo, desde el proyecto que se quiera usar la biblioteca se debe configurar lo siguiente:
+
+- En el linker: `-lcurses` `-lnivel-gui`
+- En el archivo que se necesite usar la biblioteca:
+```
+#include <nivel-gui.h>
+#include <tad_nivel.h>
+```
+
+### Desde eclipse
+
+1) Ir a las Properties del proyecto (en el Project Explorer - la columna de la izquierda - la opción aparece dándole click derecho al proyecto), y dentro de la categoría C/C++ Build entrar a Settings, y ahí a Tool Settings.
+2) Buscar GCC Linker > Libraries > Libraries. Notar que entre paréntesis dice -l, el parámetro de gcc que estamos buscando.
+3) Darle click en el botón de +, y poner el nombre de la biblioteca sin el -l (en este caso, curses y nivel-gui).
+4) Aceptar y buildear el proyecto.
+
+## Build & Run desde Consola
+
+Para compilar y ejecutar el código de ejemplo sin necesidad de instalar la biblioteca:
+
+1) Bajarlo en un directorio
+2) En el directorio padre compilar y ejecutar con `make test`.
+3) Mover un personaje con las flechas y el otro con WASD. Salir con Q.
+
+En caso de que arroje un error, asegúrese de agrandar el tamaño de la terminal y vuelva a ejecutar.
+
+Nota: se puede ejecutar con Valgrind memcheck haciendo `make valgrind`.
+
+## Build & Run desde Eclipse
 
 Hay al menos dos formas de armar los proyectos en eclipse:
 
 1- Eclipse full managed: crear los dos C Projects desde cero, copiar los archivos y configurar desde el eclipse (linkeos, parametros, etc). De esta forma eclipse crea sus makefiles y los usa para buildear.
 
-2- Eclipse half-managed:  y la otra opcion es crearlos medio "crudos" y hacer que usen los makefiles existentes.
+2- Eclipse half-managed: [crear los dos C Projects haciendo que usen los makefiles existentes](https://www.youtube.com/watch?v=PgrORWmUxkI).
 
+### Aclaración importante
 
-Se explica la opción 2:
-
-Eclipse half-manager (with git included!):
-
-- Esta opcion no usa la LD_LIBRARY_PATH, por lo tanto compila y tira la library en /lib. Ergo, hay que hacer "sudo chmod o+w /lib" para tener permisos de escritura.
-- Desde el eclipse, clonarse el repo completo (Git Repository Exploring > Clone Git Repository...)
-- Luego, Import > C/C++ > Existing Code as Makefile Project
-	- Destildar C++ y elegir Linux GCC para "indexer settings". Indicar la location del  proyecto de la library
-- Deberia haberse creado el proyecto, suceptible de ser buildeado. Deberia usar el makefile nuestro y no el del eclipse. Compilar y buildear para ver que todo esta bien.
-- Repetir lo de importar para el segundo proyecto.
-- Luego, borrar los proyectos haciendo "Delete", pero SIN ELEGIR "Delete project contents on disk..."
-- Import > Git > Projects from Git > Local > so-nivel-gui-lbrary > "Import existing projects" (y aca abrir el arbol y elegir uno de los dos proyectos > Finish
-- Repetir el paso anterior para el otro proyecto.
-- Agregar al proyecto de test la referencia al proyecto de la library (es para que el eclipse no realice sus validaciones, dado que compilar compila igual por el makefile)
-
-
--------------------------------
-Como usarlo
--------------------------------
-
-1 - Seguir los pasos de instalación descriptos en la sección
-'Build & Run desde Consola', esto habilita que la biblioteca
-ya este disponible en el sistema para ser usada.
-
-2 - Desde el proyecto que se quiera usar la biblioteca se
-debe configurar lo siguiente:
-
- + -lnivel-gui (en el linker)
- + -lcurses (en el linker)
- + #include <nivel-gui.h> (en el archivo que se necesite usar la biblioteca)
+La consola de Eclipse no es interactiva, por lo que NO es posible ejecutar la aplicación desde ahí. Sin embargo, es posible hacerlo desde consola y [debugear remotamente con Eclipse](https://www.youtube.com/watch?v=MNd8KZlDQUk).

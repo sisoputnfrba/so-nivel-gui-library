@@ -1,150 +1,132 @@
 
-#include <tad_items.h>
+#include <nivel-gui/nivel-gui.h>
+#include <nivel-gui/tad_nivel.h>
 
 #include <stdlib.h>
 #include <curses.h>
 #include <commons/collections/list.h>
+
+#define ASSERT_CREATE(nivel, id, err)                                                   \
+    if(err) {                                                                           \
+        nivel_destruir(nivel);                                                          \
+        nivel_gui_terminar();                                                           \
+        fprintf(stderr, "Error al crear '%c': %s\n", id, nivel_gui_string_error(err));  \
+        return EXIT_FAILURE;                                                            \
+    }
+
 /*
  * @NAME: rnd
- * @DESC: Modifica el numero en +1,0,-1, sin pasarse del maximo dado
+ * @DESC: Retorna un entero en el rango [-1, 1]
  */
-void rnd(int *x, int max){
-	*x += (rand() % 3) - 1;
-	*x = (*x<max) ? *x : max-1;
-	*x = (*x>0) ? *x : 1;
+int rnd() {
+	return (rand() % 3) - 1;
 }
 
 int main(void) {
-        t_list* items = list_create();
+	NIVEL* nivel;
 
-	int rows, cols;
-	int q, p;
-
-	int x = 1;
-	int y = 1;
-
-	int ex1 = 10, ey1 = 14;
-	int ex2 = 20, ey2 = 3;
+	int cols, rows;
+	int err;
 
 	nivel_gui_inicializar();
 
-    nivel_gui_get_area_nivel(&rows, &cols);
+	nivel_gui_get_area_nivel(&cols, &rows);
 
-	p = cols;
-	q = rows;
+	nivel = nivel_crear("Test Chamber 04");
 
-	CrearPersonaje(items, '@', p, q);
-	CrearPersonaje(items, '#', x, y);
+	err = personaje_crear(nivel, '@', cols - 1, rows - 1);
+	ASSERT_CREATE(nivel, '@', err);
 
-	CrearEnemigo(items, '1', ex1, ey1);
-	CrearEnemigo(items, '2', ex2, ey2);
+	err = personaje_crear(nivel, '#', 0, 0);
+	ASSERT_CREATE(nivel, '#', err);
 
-	CrearCaja(items, 'H', 26, 10, 5); 
-	CrearCaja(items, 'M', 8, 15, 3);
-	CrearCaja(items, 'F', 19, 9, 2);
+	err = enemigo_crear(nivel, '1', 10, 14);
+	ASSERT_CREATE(nivel, '1', err);
 
-	nivel_gui_dibujar(items, "Test Chamber 04");
+	err = enemigo_crear(nivel, '2', 20, 3);
+	ASSERT_CREATE(nivel, '2', err);
+
+	err = caja_crear(nivel, 'H', 26, 10, 5); 
+	ASSERT_CREATE(nivel, 'H', err);
+
+	err = caja_crear(nivel, 'M', 8, 15, 3);
+	ASSERT_CREATE(nivel, 'M', err);
+
+	err = caja_crear(nivel, 'F', 19, 9, 2);
+	ASSERT_CREATE(nivel, 'F', err);
 
 	while ( 1 ) {
+		nivel_gui_dibujar(nivel);
+
 		int key = getch();
 
 		switch( key ) {
 
 			case KEY_UP:
-				if (y > 1) {
-					y--;
-				}
+				err = item_desplazar(nivel, '#', 0, -1);
 			break;
 
 			case KEY_DOWN:
-				if (y < rows) {
-					y++;
-				}
+				err = item_desplazar(nivel, '#', 0, 1);
 			break;
 
 			case KEY_LEFT:
-				if (x > 1) {
-					x--;
-				}
+				err = item_desplazar(nivel, '#', -1, 0);
 			break;
 			case KEY_RIGHT:
-				if (x < cols) {
-					x++;
-				}
+				err = item_desplazar(nivel, '#', 1, 0);
 			break;
+
 			case 'w':
 			case 'W':
-				if (q > 1) {
-					q--;
-				}
+				err = item_desplazar(nivel, '@', 0, -1);
 			break;
 
 			case 's':
 			case 'S':
-				if (q < rows) {
-					q++;
-				}
+				err = item_desplazar(nivel, '@', 0, 1);
 			break;
 
 			case 'a':
 			case 'A':
-				if (p > 1) {
-					p--;
-				}
+				err = item_desplazar(nivel, '@', -1, 0);
 			break;
+
 			case 'D':
 			case 'd':
-				if (p < cols) {
-					p++;
-				}
+				err = item_desplazar(nivel, '@', 1, 0);
 			break;
+			
 			case 'Q':
 			case 'q':
+				nivel_destruir(nivel);
 				nivel_gui_terminar();
-				exit(0);
+				return EXIT_SUCCESS;
 			break;
 		}
 
-
-		rnd(&ex1, cols);
-		rnd(&ey1, rows);
-		rnd(&ex2, cols);
-		rnd(&ey2, rows);
-		MoverPersonaje(items, '1', ex1, ey1 );
-		MoverPersonaje(items, '2', ex2, ey2 );
-
-		MoverPersonaje(items, '@', p, q);
-		MoverPersonaje(items, '#', x, y);
-
-		if (   ((p == 26) && (q == 10)) || ((x == 26) && (y == 10)) ) {
-			restarRecurso(items, 'H');
+		if(err) {
+			printf("WARN: %s\n", nivel_gui_string_error(err));
 		}
 
-		if (   ((p == 19) && (q == 9)) || ((x == 19) && (y == 9)) ) {
-			restarRecurso(items, 'F');
+		item_desplazar(nivel, '1', rnd(), rnd());
+		item_desplazar(nivel, '2', rnd(), rnd());
+
+		if (items_chocan(nivel, 'H', '@') || items_chocan(nivel, 'H', '#')) {
+			caja_quitar_recurso(nivel, 'H');
 		}
 
-		if (   ((p == 8) && (q == 15)) || ((x == 8) && (y == 15)) ) {
-			restarRecurso(items, 'M');	
+		if (items_chocan(nivel, 'F', '@') || items_chocan(nivel, 'F', '#')) {
+			caja_quitar_recurso(nivel, 'F');
 		}
 
-		if((p == x) && (q == y)) {
-			BorrarItem(items, '#'); //si chocan, borramos uno (!)
+		if (items_chocan(nivel, 'M', '@') || items_chocan(nivel, 'M', '#')) {
+			caja_quitar_recurso(nivel, 'M');	
 		}
 
-		nivel_gui_dibujar(items, "Test Chamber 04");
+		if(items_chocan(nivel, '#', '@')) {
+			item_borrar(nivel, '#');
+		}
 	}
-
-	BorrarItem(items, '#');
-	BorrarItem(items, '@');
-
-	BorrarItem(items, '1');
-	BorrarItem(items, '2');
-
-	BorrarItem(items, 'H');
-	BorrarItem(items, 'M');
-	BorrarItem(items, 'F');
-
-	nivel_gui_terminar();
 
 }
