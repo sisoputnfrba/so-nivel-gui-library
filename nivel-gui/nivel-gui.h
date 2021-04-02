@@ -33,8 +33,7 @@
 	* @NAME: nivel_gui_dibujar
 	* @DESC: Dibuja cada entidad en la lista de items
 	* @PARAMS:
-	*       items        - lista de objetos a dibujar
-	*       nombre_nivel - nombre del nivel
+	*       nivel - nivel a dibujar
 	* @ERRORS:
 	*     NGUI_NO_INIT
 	*/
