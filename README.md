@@ -26,7 +26,7 @@ Para desinstalar, ejecutar `make uninstall`
 
 Para usarlo, desde el proyecto que se quiera usar la biblioteca se debe configurar lo siguiente:
 
-- En el linker: `-lcurses` `-lnivel-gui`
+- En el linker: `-lnivel-gui -lncurses`
 - En el archivo que se necesite usar la biblioteca:
 ```
 #include <nivel-gui/nivel-gui.h>
@@ -37,7 +37,7 @@ Para usarlo, desde el proyecto que se quiera usar la biblioteca se debe configur
 
 1) Ir a las Properties del proyecto (en el Project Explorer - la columna de la izquierda - la opción aparece dándole click derecho al proyecto), y dentro de la categoría C/C++ Build entrar a Settings, y ahí a Tool Settings.
 2) Buscar GCC Linker > Libraries > Libraries. Notar que entre paréntesis dice -l, el parámetro de gcc que estamos buscando.
-3) Darle click en el botón de +, y poner el nombre de la biblioteca sin el -l (en este caso, curses y nivel-gui).
+3) Darle click en el botón de +, y poner el nombre de la biblioteca sin el -l (en este caso, nivel-gui y ncurses).
 4) Aceptar y buildear el proyecto.
 
 ## Build & Run desde Consola
