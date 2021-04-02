@@ -5,17 +5,6 @@
 	#define CAJA_ITEM_TYPE      3
 	#define ENEMIGO_ITEM_TYPE   4
 
-	#define NGUI_SUCCESS                0
-	#define NGUI_ITEM_NOT_FOUND        -1
-	#define NGUI_ITEM_ALREADY_EXISTS   -2
-	#define NGUI_NOT_RECURSO_ITEM      -3
-	#define NGUI_ITEM_INVALID_POSITION -4
-	#define NGUI_ITEM_INVALID_CANT     -5
-	#define NGUI_EMPTY_RECURSO         -6
-	#define NGUI_NO_INIT               -7
-	#define NGUI_ALREADY_INIT          -8
-	#define NGUI_WINDOW_SIZE_ERR       -9
-
 	#include <commons/collections/list.h>
 	#include <commons/string.h>
 
@@ -35,6 +24,8 @@
 	/*
 	* @NAME: nivel_gui_inicializar
 	* @DESC: Inicializa el espacio de dibujo
+	* @ERRORS:
+	*     NGUI_ALREADY_INIT
 	*/
 	int nivel_gui_inicializar(void);
 
@@ -44,12 +35,16 @@
 	* @PARAMS:
 	*       items        - lista de objetos a dibujar
 	*       nombre_nivel - nombre del nivel
+	* @ERRORS:
+	*     NGUI_NO_INIT
 	*/
 	int nivel_gui_dibujar(NIVEL* nivel);
 
 	/*
 	* @NAME: nivel_gui_terminar
 	* @DESC: Termina el nivel de forma prolija
+	* @ERRORS:
+	*     NGUI_NO_INIT
 	*/
 	int nivel_gui_terminar(void);
 
@@ -59,6 +54,9 @@
 	* @PARAMS:
 	*       columnas - valor de retorno de columnas
 	*       filas    - valor de retorno de filas
+	* @ERRORS:
+	*     NGUI_NO_INIT
+	*     NGUI_TERM_SIZE_FAIL
 	*/
 	int nivel_gui_get_area_nivel(int * columnas, int * filas);
 
@@ -69,5 +67,56 @@
 	*     errnum - código de error
 	*/
 	char* nivel_gui_string_error(int errnum);
+
+	/*
+	* @NAME: NGUI_SUCCESS
+	* @DESC: Operacion exitosa.
+	*/
+	#define NGUI_SUCCESS                0
+	/*
+	* @NAME: NGUI_ITEM_NOT_FOUND
+	* @DESC: No se encontro el item.
+	*/
+	#define NGUI_ITEM_NOT_FOUND        -1
+	/*
+	* @NAME: NGUI_ITEM_ALREADY_EXISTS
+	* @DESC: El item ya existe.
+	*/
+	#define NGUI_ITEM_ALREADY_EXISTS   -2
+	/*
+	* @NAME: NGUI_ITEM_NOT_A_BOX
+	* @DESC: El item no es una caja de recursos.
+	*/
+	#define NGUI_ITEM_NOT_A_BOX        -3
+	/*
+	* @NAME: NGUI_ITEM_INVALID_POSITION
+	* @DESC: La posicion se encuentra fuera del tablero.
+	*/
+	#define NGUI_ITEM_INVALID_POSITION -4
+	/*
+	* @NAME: NGUI_ITEM_INVALID_SRCS
+	* @DESC: La cantidad de recursos recibida no es valida.
+	*/
+	#define NGUI_ITEM_INVALID_SRCS     -5
+	/*
+	* @NAME: NGUI_ITEM_EMPTY_BOX
+	* @DESC: "La caja de recursos se encuentra vacia."
+	*/
+	#define NGUI_ITEM_EMPTY_BOX        -6
+	/*
+	* @NAME: NGUI_NO_INIT
+	* @DESC: Library no inicializada.
+	*/
+	#define NGUI_NO_INIT               -7
+	/*
+	* @NAME: NGUI_ALREADY_INIT
+	* @DESC: Library ya inicializada.
+	*/
+	#define NGUI_ALREADY_INIT          -8
+	/*
+	* @NAME: NGUI_TERM_SIZE_FAIL
+	* @DESC: Error al obtener el tamaño de la terminal.
+	*/
+	#define NGUI_TERM_SIZE_FAIL        -9
 
 #endif 
