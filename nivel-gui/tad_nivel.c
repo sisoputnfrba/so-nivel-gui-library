@@ -35,7 +35,7 @@ int enemigo_crear(NIVEL* nivel, char id, int x , int y) {
 
 int caja_crear(NIVEL* nivel, char id, int x , int y, int cant) {
 	if(cant < 0) {
-		return NGUI_ITEM_INVALID_CANT;
+		return NGUI_ITEM_INVALID_SRCS;
 	}
 
 	return _crear_item(nivel, id, x, y, CAJA_ITEM_TYPE, cant);
@@ -49,7 +49,7 @@ int item_borrar(NIVEL* nivel, char id) {
 	}
 	list_remove_and_destroy_by_condition(nivel->items, (void*) _search_by_id, (void*) free);
 
-	return found;
+	return found ? NGUI_SUCCESS : NGUI_ITEM_NOT_FOUND;
 }
 
 int item_mover(NIVEL* nivel, char id, int x, int y) {
@@ -80,11 +80,11 @@ int caja_quitar_recurso(NIVEL* nivel, char id) {
 	}
 
 	if(item->item_type != CAJA_ITEM_TYPE) {
-		return NGUI_NOT_RECURSO_ITEM;
+		return NGUI_ITEM_NOT_A_BOX;
 	}
 
 	if(item->quantity == 0) {
-		return NGUI_EMPTY_RECURSO;
+		return NGUI_ITEM_EMPTY_BOX;
 	}
 
 	item->quantity--;
@@ -100,7 +100,7 @@ int caja_agregar_recurso(NIVEL* nivel, char id) {
 	}
 
 	if(item->item_type != CAJA_ITEM_TYPE) {
-		return NGUI_NOT_RECURSO_ITEM;
+		return NGUI_ITEM_NOT_A_BOX;
 	}
 
 	item->quantity++;

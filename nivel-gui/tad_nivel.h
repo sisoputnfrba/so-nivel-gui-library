@@ -30,6 +30,9 @@
 	*     id    - identificador único de acceso del item
 	*     x     - posición inicial en x
 	*     y     - posición inicial en y
+	* @ERRORS:
+	*     NGUI_ITEM_ALREADY_EXISTS
+	*     NGUI_ITEM_INVALID_POSITION
 	*/
 	int personaje_crear(NIVEL* nivel, char id, int x , int y);
 	
@@ -43,8 +46,11 @@
 	*     id    - identificador único de acceso del item
 	*     x     - posición inicial en x
 	*     y     - posición inicial en y
+	* @ERRORS:
+	*     NGUI_ITEM_ALREADY_EXISTS
+	*     NGUI_ITEM_INVALID_POSITION
 	*/
-	int enemigo_crear(NIVEL* nivel, char id, int x , int y);
+	int enemigo_crear(NIVEL* nivel, char id, int x, int y);
 	
 	/*
 	* @NAME: caja_crear
@@ -52,12 +58,15 @@
 	* el nivel con el caracter que lo identifica en color negro
 	* y fondo en amarillo.
 	* @PARAMS:
-	* @PARAMS:
 	*     nivel - nivel donde se encontrará la caja
 	*     id    - identificador único de acceso del item
 	*     x     - posición inicial en x
 	*     y     - posición inicial en y
 	*     srcs  - cantidad inicial de recursos contenidos en la caja
+	* @ERRORS:
+	*     NGUI_ITEM_ALREADY_EXISTS
+	*     NGUI_ITEM_INVALID_POSITION
+	*     NGUI_ITEM_INVALID_SRCS
 	*/
 	int caja_crear(NIVEL* nivel, char id, int x, int y, int srcs);
 
@@ -67,6 +76,8 @@
 	* @PARAMS:
 	*     nivel - nivel donde se encuentra el item
 	*     id    - identificador único de acceso del item
+	* @ERRORS:
+	*     NGUI_ITEM_NOT_FOUND
 	*/
 	int item_borrar(NIVEL* nivel, char id);
 
@@ -79,6 +90,9 @@
 	*     id    - identificador único de acceso del item
 	*     x     - nueva posición en x
 	*     y     - nueva posición en y
+	* @ERRORS:
+	*     NGUI_ITEM_NOT_FOUND
+	*     NGUI_ITEM_INVALID_POSITION
 	*/
 	int item_mover(NIVEL* nivel, char id, int x, int y);
 
@@ -92,6 +106,9 @@
 	*     id       - identificador único de acceso del item
 	*     offset_x - desplazamiento en x
 	*     offset_y - desplazamiento en y
+	* @ERRORS:
+	*     NGUI_ITEM_NOT_FOUND
+	*     NGUI_ITEM_INVALID_POSITION
 	*/
 	int item_desplazar(NIVEL* nivel, char id, int offset_x, int offset_y);
 
@@ -102,6 +119,10 @@
 	* @PARAMS:
 	*     nivel - nivel donde se encuentra el item
 	*     id    - identificador único de acceso del item
+	* @ERRORS:
+	*     NGUI_ITEM_NOT_FOUND
+	*     NGUI_ITEM_NOT_A_BOX
+	*     NGUI_ITEM_EMPTY_BOX
 	*/
 	int caja_quitar_recurso(NIVEL* nivel, char id);
 	
@@ -111,6 +132,9 @@
 	* @PARAMS:
 	*     nivel - nivel donde se encuentra el item
 	*     id    - identificador único de acceso del item
+	* @ERRORS:
+	*     NGUI_ITEM_NOT_FOUND
+	*     NGUI_ITEM_NOT_A_BOX
 	*/
 	int caja_agregar_recurso(NIVEL* nivel, char id);
 

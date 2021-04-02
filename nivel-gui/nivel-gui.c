@@ -19,7 +19,7 @@ static int inicializado = 0;
  *      filas    - valor de retorno de filas
  *      columnas - valor de retorno de columnas
  */
-void nivel_gui_get_term_size(int * filas, int * columnas);
+int nivel_gui_get_term_size(int * filas, int * columnas);
 
 /*
  * @NAME: nivel_gui_int_validar_inicializado
@@ -121,51 +121,57 @@ int nivel_gui_get_area_nivel(int * cols, int * rows) {
 		return NGUI_NO_INIT;
 	}
 
-	nivel_gui_get_term_size(rows, cols);
+	if(nivel_gui_get_term_size(rows, cols)) {
+		return NGUI_TERM_SIZE_FAIL;
+	}
+
 	if(rows) *rows = *rows - 5;
 	if(cols) *cols = *cols - 2;
 
-	return EXIT_SUCCESS;
+	return NGUI_SUCCESS;
 }
 
 char* nivel_gui_string_error(int errnum) {
 	switch ( errnum ) {
 		case NGUI_SUCCESS:
-			return "Exito.";
+			return "Operacion exitosa.";
 		case NGUI_ITEM_NOT_FOUND: 
 			return "No se encontro el item.";
 		case NGUI_ITEM_ALREADY_EXISTS: 
 			return "El item ya existe.";
-		case NGUI_NOT_RECURSO_ITEM: 
-			return "El item no es un recurso.";
+		case NGUI_ITEM_NOT_A_BOX: 
+			return "El item no es una caja de recursos.";
 		case NGUI_ITEM_INVALID_POSITION: 
 			return "La posicion se encuentra fuera del tablero.";
-		case NGUI_ITEM_INVALID_CANT: 
-			return "La cantidad de elementos recibida no es valida.";
-		case NGUI_EMPTY_RECURSO: 
-			return "El recurso se encuentra vacio.";
+		case NGUI_ITEM_INVALID_SRCS: 
+			return "La cantidad de recursos recibida no es valida.";
+		case NGUI_ITEM_EMPTY_BOX: 
+			return "La caja de recursos se encuentra vacia.";
 		case NGUI_NO_INIT:
 			return "Library no inicializada.";
 		case NGUI_ALREADY_INIT:
 			return "Library ya inicializada.";
+		case NGUI_TERM_SIZE_FAIL:
+			return "Error al obtener el tamanio de la terminal.";
 		default:
-			return "Desconocido.";
+			return "Error desconocido.";
 	}
 }
 
 /*---------------- Funciones utilitarias ----------------*/
 
-void nivel_gui_get_term_size(int * rows, int * cols) {
+int nivel_gui_get_term_size(int * rows, int * cols) {
 
 	struct winsize ws;
 
 	if ( ioctl(0, TIOCGWINSZ, &ws) < 0 ) {
-		perror("couldn't get window size");
-		return;
+		return NGUI_TERM_SIZE_FAIL;
 	}
 
 	if(rows) *rows = ws.ws_row;
 	if(cols) *cols = ws.ws_col;
+
+	return NGUI_SUCCESS;
 }
 
 int nivel_gui_int_validar_inicializado(void) {
