@@ -29,8 +29,8 @@ Para usarlo, desde el proyecto que se quiera usar la biblioteca se debe configur
 - En el linker: `-lcurses` `-lnivel-gui`
 - En el archivo que se necesite usar la biblioteca:
 ```
-#include <nivel-gui.h>
-#include <tad_nivel.h>
+#include <nivel-gui/nivel-gui.h>
+#include <nivel-gui/tad_nivel.h>
 ```
 
 ### Desde eclipse
