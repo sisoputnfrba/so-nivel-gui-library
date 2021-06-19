@@ -85,7 +85,6 @@
 	* @ERRORS:
 	*     NGUI_ITEM_ALREADY_EXISTS
 	*     NGUI_ITEM_INVALID_POSITION
-	*     NGUI_ITEM_INVALID_SRCS
 	*/
 	int item_crear(NIVEL* nivel, ITEM_NIVEL item);
 
