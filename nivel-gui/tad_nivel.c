@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-int _crear_item(NIVEL* nivel, char id, int x, int y, int tipo, int cant);
+int _crear_item(NIVEL* nivel, char id, int x, int y, char show, int tipo, int cant);
 ITEM_NIVEL* _search_item_by_id(NIVEL* nivel, char id);
 int _cambiar_posicion(ITEM_NIVEL* item, int x, int y);
 bool _validar_posicion(int x, int y);
@@ -25,20 +25,29 @@ void nivel_destruir(NIVEL* nivel) {
 	free(nivel);
 }
 
+int item_crear(NIVEL* nivel, ITEM_NIVEL item) {
+	return _crear_item(nivel, 
+		               item.id, 
+					   item.posx, 
+					   item.posy, 
+					   item.show, 
+					   item.color, 
+					   item.srcs);
+}
+
 int personaje_crear(NIVEL* nivel, char id, int x , int y) {
-	return _crear_item(nivel, id, x, y, PERSONAJE_ITEM_TYPE, 0);
+	return _crear_item(nivel, id, x, y, id, NGUI_BLACK, -1);
 }
 
 int enemigo_crear(NIVEL* nivel, char id, int x , int y) {
-	return _crear_item(nivel, id, x, y, ENEMIGO_ITEM_TYPE, 0);
+	return _crear_item(nivel, id, x, y, '*', NGUI_BLUE, -1);
 }
 
-int caja_crear(NIVEL* nivel, char id, int x , int y, int cant) {
+int caja_crear(NIVEL* nivel, char id, int x, int y, int cant) {
 	if(cant < 0) {
 		return NGUI_ITEM_INVALID_SRCS;
 	}
-
-	return _crear_item(nivel, id, x, y, CAJA_ITEM_TYPE, cant);
+	return _crear_item(nivel, id, x, y, id, NGUI_YELLOW, cant);
 }
 
 int item_borrar(NIVEL* nivel, char id) {
@@ -79,15 +88,15 @@ int caja_quitar_recurso(NIVEL* nivel, char id) {
 		return NGUI_ITEM_NOT_FOUND;
 	}
 
-	if(item->item_type != CAJA_ITEM_TYPE) {
+	if(item->srcs == -1) {
 		return NGUI_ITEM_NOT_A_BOX;
 	}
 
-	if(item->quantity == 0) {
+	if(item->srcs == 0) {
 		return NGUI_ITEM_EMPTY_BOX;
 	}
 
-	item->quantity--;
+	item->srcs--;
 	
 	return NGUI_SUCCESS;
 }
@@ -99,11 +108,11 @@ int caja_agregar_recurso(NIVEL* nivel, char id) {
 		return NGUI_ITEM_NOT_FOUND;
 	}
 
-	if(item->item_type != CAJA_ITEM_TYPE) {
+	if(item->srcs == -1) {
 		return NGUI_ITEM_NOT_A_BOX;
 	}
 
-	item->quantity++;
+	item->srcs++;
 	
 	return NGUI_SUCCESS;
 }
@@ -118,7 +127,11 @@ bool items_chocan(NIVEL* nivel, char id1, char id2) {
 	}
 }
 
-int _crear_item(NIVEL* nivel, char id, int x , int y, int tipo, int cant_rec) {
+int _crear_item(NIVEL* nivel, 
+                char id, 
+				int x, int y, 
+				char show, int color,
+				int cant_rec) {
 	if(!_validar_posicion(x, y)) {
 		return NGUI_ITEM_INVALID_POSITION;
 	}
@@ -130,10 +143,11 @@ int _crear_item(NIVEL* nivel, char id, int x , int y, int tipo, int cant_rec) {
 	ITEM_NIVEL* item = malloc(sizeof(ITEM_NIVEL));
 
 	item->id = id;
-	item->posx=x;
-	item->posy=y;
-	item->item_type = tipo;
-	item->quantity = cant_rec;
+	item->posx = x;
+	item->posy = y;
+	item->show = show;
+	item->color = color;
+	item->srcs = cant_rec;
 
 	list_add(nivel->items, item);
 
