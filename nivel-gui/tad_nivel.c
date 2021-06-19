@@ -123,7 +123,7 @@ int caja_quitar_recurso(NIVEL* nivel, char id) {
 		return NGUI_ITEM_NOT_FOUND;
 	}
 
-	if(item->srcs == -1) {
+	if(item->srcs < 0) {
 		return NGUI_ITEM_NOT_A_BOX;
 	}
 
@@ -143,7 +143,7 @@ int caja_agregar_recurso(NIVEL* nivel, char id) {
 		return NGUI_ITEM_NOT_FOUND;
 	}
 
-	if(item->srcs == -1) {
+	if(item->srcs < 0) {
 		return NGUI_ITEM_NOT_A_BOX;
 	}
 
