@@ -1,12 +1,21 @@
 #ifndef __NIVEL_H__
 #define __NIVEL_H__
 
-	#define PERSONAJE_ITEM_TYPE 2
-	#define CAJA_ITEM_TYPE      3
-	#define ENEMIGO_ITEM_TYPE   4
+	#define NGUI_BORDERS 1
 
 	#include <commons/collections/list.h>
 	#include <commons/string.h>
+
+	typedef enum {
+		NGUI_BLACK = 2,
+		NGUI_YELLOW = 3,
+		NGUI_BLUE = 4,
+		NGUI_RED = 5,
+		NGUI_GREEN = 6,
+		NGUI_MAGENTA = 7,
+		NGUI_CYAN = 8,
+		NGUI_WHITE = 9
+	} ITEM_COLOR;
 
 	typedef struct nivel {
 		char* nombre;
@@ -17,8 +26,9 @@
 		char id;
 		int posx;
 		int posy;
-		int item_type; // PERSONAJE, ENEMIGO o CAJA
-		int quantity;
+		char show;
+		ITEM_COLOR color;
+		int srcs;
 	} ITEM_NIVEL;
 
 	/*

@@ -27,13 +27,6 @@ int nivel_gui_get_term_size(int * filas, int * columnas);
  */
 int nivel_gui_int_validar_inicializado(void);
 
-/*
- * @NAME: nivel_gui_item_show
- * @DESC: Devuelve el caracter a mostrarse en pantalla 
- * segun el item
- */
-char nivel_gui_item_show(ITEM_NIVEL* item);
-
 // ------------------------------------------------------
 
 int nivel_gui_inicializar(void) {
@@ -46,10 +39,15 @@ int nivel_gui_inicializar(void) {
 	keypad(stdscr, TRUE);
 	noecho();
 	start_color();
-	init_pair(1                  , COLOR_GREEN, COLOR_BLACK);
-	init_pair(PERSONAJE_ITEM_TYPE, COLOR_WHITE, COLOR_BLACK);
-	init_pair(CAJA_ITEM_TYPE     , COLOR_BLACK, COLOR_YELLOW);
-	init_pair(ENEMIGO_ITEM_TYPE  , COLOR_BLACK, COLOR_BLUE);
+	init_pair(NGUI_BORDERS, COLOR_GREEN, COLOR_BLACK  );
+	init_pair(NGUI_BLACK  , COLOR_WHITE, COLOR_BLACK  );
+	init_pair(NGUI_YELLOW , COLOR_BLACK, COLOR_YELLOW );
+	init_pair(NGUI_BLUE   , COLOR_BLACK, COLOR_BLUE   );
+	init_pair(NGUI_RED    , COLOR_BLACK, COLOR_RED    );
+	init_pair(NGUI_GREEN  , COLOR_BLACK, COLOR_GREEN  );
+	init_pair(NGUI_MAGENTA, COLOR_BLACK, COLOR_MAGENTA);
+	init_pair(NGUI_CYAN   , COLOR_BLACK, COLOR_CYAN   );
+	init_pair(NGUI_WHITE  , COLOR_BLACK, COLOR_WHITE  );
 	box(stdscr, 0, 0);
 	refresh();
 
@@ -74,13 +72,13 @@ int nivel_gui_dibujar(NIVEL* nivel) {
 
 	werase(secwin);
 	box(secwin, 0, 0);
-	wbkgd(secwin, COLOR_PAIR(1));
+	wbkgd(secwin, COLOR_PAIR(NGUI_BORDERS));
 
 	void _draw_element(ITEM_NIVEL* item) {
 		wmove(secwin, item->posy + 1, item->posx + 1);
-		waddch(secwin, nivel_gui_item_show(item) | COLOR_PAIR(item->item_type));
-		if (item->item_type == CAJA_ITEM_TYPE) {
-			string_append_with_format(&srcs_text, "%c: %d - ", item->id, item->quantity);
+		waddch(secwin, item->show | COLOR_PAIR(item->color));
+		if (item->srcs >= 0) {
+			string_append_with_format(&srcs_text, "%c: %d - ", item->id, item->srcs);
 		}
 	}
 
@@ -176,8 +174,4 @@ int nivel_gui_get_term_size(int * rows, int * cols) {
 
 int nivel_gui_int_validar_inicializado(void) {
 	return inicializado;
-}
-
-char nivel_gui_item_show(ITEM_NIVEL* item) {
-	return item->item_type == ENEMIGO_ITEM_TYPE ? '*' : item->id;
 }

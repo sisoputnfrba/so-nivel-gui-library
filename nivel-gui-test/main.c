@@ -11,7 +11,7 @@
         nivel_destruir(nivel);                                                          \
         nivel_gui_terminar();                                                           \
         fprintf(stderr, "Error al crear '%c': %s\n", id, nivel_gui_string_error(err));  \
-        return EXIT_FAILURE;                                                            \
+        exit(EXIT_FAILURE);                                                             \
     }
 
 /*
@@ -21,6 +21,12 @@
 int rnd() {
 	return (rand() % 3) - 1;
 }
+
+/*
+ * @NAME: dibujar_ejemplo_colores
+ * @DESC: Escribe arriba a la derecha un ejemplo de uso de los distintos colores
+ */
+void dibujar_ejemplo_colores(NIVEL* nivel, int cols, int rows);
 
 int main(void) {
 	NIVEL* nivel;
@@ -33,6 +39,7 @@ int main(void) {
 	nivel_gui_get_area_nivel(&cols, &rows);
 
 	nivel = nivel_crear("Test Chamber 04");
+	dibujar_ejemplo_colores(nivel, cols, rows);
 
 	err = personaje_crear(nivel, '@', cols - 1, rows - 1);
 	ASSERT_CREATE(nivel, '@', err);
@@ -129,4 +136,112 @@ int main(void) {
 		}
 	}
 
+}
+
+void dibujar_ejemplo_colores(NIVEL* nivel, int cols, int rows) {
+	int err;
+
+	err = item_crear(
+		nivel, 
+		(ITEM_NIVEL) {
+			.id = '3',
+			.posx = cols - 9,
+			.posy = 0,
+			.show = 'N',
+			.color = NGUI_BLACK,
+			.srcs = -1
+		}
+	);
+	ASSERT_CREATE(nivel, '3', err);
+
+	err = item_crear(
+		nivel, 
+		(ITEM_NIVEL) {
+			.id = '4',
+			.posx = cols - 8,
+			.posy = 0,
+			.show = 'I',
+			.color = NGUI_YELLOW,
+			.srcs = -1
+		}
+	);
+	ASSERT_CREATE(nivel, '4', err);
+
+	err = item_crear(
+		nivel, 
+		(ITEM_NIVEL) {
+			.id = '5',
+			.posx = cols - 7,
+			.posy = 0,
+			.show = 'V',
+			.color = NGUI_BLUE,
+			.srcs = -1
+		}
+	);
+	ASSERT_CREATE(nivel, '5', err);
+
+    err = item_crear(
+		nivel, 
+		(ITEM_NIVEL) {
+			.id = '6',
+			.posx = cols - 6,
+			.posy = 0,
+			.show = 'E',
+			.color = NGUI_RED,
+			.srcs = -1
+		}
+	);
+	ASSERT_CREATE(nivel, '6', err);
+
+	err = item_crear(
+		nivel, 
+		(ITEM_NIVEL) {
+			.id = '7',
+			.posx = cols - 5,
+			.posy = 0,
+			.show = 'L',
+			.color = NGUI_GREEN,
+			.srcs = -1
+		}
+	);
+	ASSERT_CREATE(nivel, '7', err);
+
+	err = item_crear(
+		nivel, 
+		(ITEM_NIVEL) {
+			.id = '8',
+			.posx = cols - 4,
+			.posy = 0,
+			.show = 'G',
+			.color = NGUI_MAGENTA,
+			.srcs = -1
+		}
+	);
+	ASSERT_CREATE(nivel, '8', err);
+
+	err = item_crear(
+		nivel, 
+		(ITEM_NIVEL) {
+			.id = '9',
+			.posx = cols - 3,
+			.posy = 0,
+			.show = 'U',
+			.color = NGUI_CYAN,
+			.srcs = -1
+		}
+	);
+	ASSERT_CREATE(nivel, '9', err);
+
+	err = item_crear(
+		nivel, 
+		(ITEM_NIVEL) {
+			.id = '0',
+			.posx = cols - 2,
+			.posy = 0,
+			.show = 'I',
+			.color = NGUI_WHITE,
+			.srcs = -1
+		}
+	);
+	ASSERT_CREATE(nivel, '0', err);
 }

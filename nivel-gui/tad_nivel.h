@@ -34,7 +34,7 @@
 	*     NGUI_ITEM_ALREADY_EXISTS
 	*     NGUI_ITEM_INVALID_POSITION
 	*/
-	int personaje_crear(NIVEL* nivel, char id, int x , int y);
+	int personaje_crear(NIVEL* nivel, char id, int x, int y);
 	
 	/*
 	* @NAME: enemigo_crear
@@ -69,6 +69,24 @@
 	*     NGUI_ITEM_INVALID_SRCS
 	*/
 	int caja_crear(NIVEL* nivel, char id, int x, int y, int srcs);
+
+	/*
+	* @NAME: item_crear
+	* @DESC: Crea una instancia de item que se mostrará en el nivel con el color
+	* y caracter recibidos por parámetro en una estructura ITEM_NIVEL.
+	* @PARAMS:
+	*     nivel      - nivel donde se encontrará el personaje
+	*     item.id    - identificador único de acceso del item
+	*     item.posx  - posición inicial en x
+	*     item.posy  - posición inicial en y
+	*     item.show  - caracter con el que se mostrará al item en pantalla
+	*     item.color - color de fondo del item
+	*     item.srcs  - cantidad de recursos iniciales (-1 si no es un recurso)
+	* @ERRORS:
+	*     NGUI_ITEM_ALREADY_EXISTS
+	*     NGUI_ITEM_INVALID_POSITION
+	*/
+	int item_crear(NIVEL* nivel, ITEM_NIVEL item);
 
 	/*
 	* @NAME: item_borrar
